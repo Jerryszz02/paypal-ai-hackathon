@@ -1,0 +1,47 @@
+# macOS and editors
+.DS_Store
+._*
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+credentials*.json
+secrets*.json
+
+# Dependencies, generated output and local caches
+node_modules/
+.next/
+.nuxt/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+dist/
+build/
+coverage/
+.cache/
+.pytest_cache/
+.ruff_cache/
+*.tsbuildinfo
+*.log
+
+# Local deployment metadata and browser test output
+.vercel/
+.netlify/
+playwright-report/
+test-results/
+
+# Local data and isolated checkouts
+.local/
+.worktrees/
+*.sqlite
+*.sqlite3
+*.db
