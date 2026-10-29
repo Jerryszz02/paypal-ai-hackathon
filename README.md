@@ -3,17 +3,22 @@
 PayPal AI Hackathon 2026 项目工作区。
 
 - 比赛官网：[PayPal AI Hackathon](https://paypalaihackathon.devpost.com/)
-- 当前阶段：仓库初始化、比赛规则核实与选题研究。
-- 产品方向与技术栈：尚未确定；当前没有可运行的应用。
-- 开发环境：计划使用 PayPal Sandbox；凭据只保存在本地环境变量中。
+- 产品方向：通用票据整理与报销助手。AI 检查材料，按组织规则请求补交、转人工或自动批准，再通过 PayPal 处理报销付款。
+- 当前阶段：方向已确定，产品设计与开发计划待评审；截至 2026-10-29，没有可运行的应用。
+- 拟议技术栈：Next.js + TypeScript、Supabase、服务端 AI API Key、PayPal Sandbox Payouts。详细选型与范围见规划文档。
+- 凭据只保存在服务端环境变量或部署平台密钥设置中，不进入浏览器或仓库。
 
 ## 项目资料
 
 - [比赛规则、截止时间与提交要求](docs/hackathon-rules.md)
-- [候选方向、推荐 MVP 与两周安排](docs/project-direction.md)
+- [当前产品方向与选题历史](docs/project-direction.md)
+- [规划索引](docs/planning/README.md)
+- [产品设计与 MVP 范围](docs/planning/prd.md)
+- [技术栈与 AI / PayPal 接入设计](docs/planning/technical-design.md)
+- [开发顺序和里程碑](docs/planning/development-plan.md)
 - [项目协作约定](AGENTS.md)
 
-研究核查于 2026-10-28。当前推荐方向为自由职业者的需求变更确认与收款助手，仍待选题确认和需求验证。
+比赛规则备忘录核查于 2026-10-28；产品规划更新于 2026-10-29。规划描述目标行为，不作为实现或实际支付成功的证据。
 
 ## 仓库状态
 
