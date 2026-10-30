@@ -346,7 +346,12 @@ async function handle(request: Request, context: Context): Promise<Response> {
             ],
             paidEvidence: false,
             purposeMatches: null,
-            provider: appMode() === 'demo' ? 'demo' : 'openai',
+            provider:
+              appMode() === 'demo'
+                ? 'demo'
+                : process.env.AI_PROVIDER === 'deepseek'
+                  ? 'deepseek'
+                  : 'openai',
             model:
               appMode() === 'demo' ? 'synthetic-fixture' : process.env.AI_MODEL || 'not-configured',
             status: 'failed',

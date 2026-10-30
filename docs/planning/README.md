@@ -1,16 +1,17 @@
 # 报销助手规划索引
 
-更新／状态核查：2026-10-30（Europe/London）。工作模式：执行用户认可的报销助手计划；用户明确选择“先完成本地第一版和接入代码”。实施分支 `agent/reimbursement-v1`，基于已合并规划的 `origin/main`（`dc40e1c`）。
+更新／状态核查：2026-10-30（Europe/London）。工作模式：本地第一版已交付，继续配置受控测试服务和参赛草稿。用户已授权公开源码并使用 MIT，选择 DeepSeek 接入；真实 AI 与 PayPal Sandbox 验收仍待配置。
 
-规范项目根目录：`/Users/jerryszz/Desktop/Projects/Hackathons/PayPal AI Hackathon`。本轮通过独立工作树开发，未将实施 PR 合并或发布。
+规范项目根目录：`/Users/jerryszz/Desktop/Projects/Hackathons/PayPal AI Hackathon`。[第一版 PR #3](https://github.com/Jerryszz02/paypal-ai-hackathon/pull/3) 已合并；[MIT PR #4](https://github.com/Jerryszz02/paypal-ai-hackathon/pull/4) 已合并，仓库已公开。Devpost 已保存草稿，尚未正式提交。
 
 ## 目标与当前事实
 
 - **实施基线**：工作名称 Carry；英文界面、单组织 GBP、报销人与财务角色、£50／£200／30 天示例政策，自动付款默认关闭。
 - **本地第一版已实现**：六个页面、私有票据上传与原件预览、样本识别／字段确认、确定性规则分流、补交、人工决定、版本与审批记录、收款档案、政策、双状态付款与 CSV。
 - **本地持久化已验证**：PGlite 执行 PostgreSQL schema；事务控制累计占用、唯一付款意图、历史不可变、任务恢复和角色隔离。浏览器不直接访问数据库或存储。
-- **接入代码已实现，外部待验证**：Supabase Auth／私有 Storage／Postgres、OpenAI Responses、PayPal Sandbox Payouts 与验签通知。测试使用替身，不是供应商调用或到账证明。
-- **未执行**：真实 API 调用、模型准确率样本评估、云项目创建、托管 Supabase 验收、部署、公开仓库、报名或正式提交。
+- **接入代码已实现，外部待验证**：Supabase Auth／私有 Storage／Postgres、OpenAI／DeepSeek Responses、PayPal Sandbox Payouts 与验签通知。模型与付款自动化测试使用替身，不是模型调用或到账证明。
+- **Supabase 部分验收已完成**：独立 Carry Sandbox 项目、14 张启用 RLS 且撤销客户端直连权限的业务表、私有票据桶及三个受控测试账号已配置；真实 Auth 登录、文件上传下载及拒绝越权访问的探针通过。
+- **仍未完成**：本机 Postgres 直连与应用完整 Sandbox 流程、真实模型调用和质量评估、PayPal Sandbox 交易、应用部署、视频与正式提交。
 
 用户确认的本轮边界允许先验收本地流程。因此 M0 的真实服务出口保持待验证，未被模拟结果替代；本地实现不宣称满足比赛要求的真实 AI＋Sandbox 集成。
 
@@ -27,9 +28,9 @@
 
 ## 验证证据与维护边界
 
-- 2026-10-30 最终本地验证：lint、TypeScript、生产构建通过；Vitest 7 个文件共 105 项通过，Chrome 4 条端到端用例通过；桌面和 375px 页面完成实际浏览器检查。外部服务测试未执行。
+- 2026-10-30 首次实现时的历史本地验证：lint、TypeScript、生产构建通过；Vitest 7 个文件共 105 项通过，Chrome 4 条端到端用例通过；桌面和 375px 页面完成实际浏览器检查。外部服务测试未执行。
 - 自动化入口：`npm run lint`、`npm run typecheck`、`npm test`、`npm run build`、`npm run test:e2e`。测试源码在 `tests/`，浏览器结果在本地忽略的 `test-results/`／`playwright-report/`；结果以实施 PR 的最终验证记录为准。
-- 本地 PostgreSQL 验证包含并发额度、重启持久化、唯一付款、不可变历史及拒绝 `authenticated` 角色的直接读写；不代表托管实例和 Storage 的真实配置已通过。
+- 本地 PostgreSQL 验证包含并发额度、重启持久化、唯一付款、不可变历史及拒绝 `authenticated` 角色的直接读写。后续托管 Auth／Storage 探针为单独证据，范围见开发者指南，不代表完整应用 Sandbox 验收。
 - Provider 测试使用固定响应及失效输入；PDF／图片验证、签名会话、同源校验、权限与源引用、未知结果保留、旧事件不回退到账状态均有针对性验证。
 - 文档检查：`git diff --check` 与 `audit_planning_docs.py`；这些只证明格式与链接，不证明外部服务状态。
 - 历史规划不承担运行日志。没有部署记录；当前运行版本应由启动进程工作目录、Git head 和服务探针核实。
@@ -41,6 +42,6 @@
 ## 仍待验证／决定
 
 1. AI 模型、权限、费用预算及至少 15 份匿名材料的实际识别质量；本地样本不是该评估。
-2. Supabase 项目、真实 Auth／Storage／数据库访问与托管运行限制。
+2. Supabase 的本机数据库直连、应用 Sandbox 权限流程与托管运行限制。
 3. PayPal Sandbox Payouts 权限、测试买卖方、真实创建／单笔查询、可达 webhook 与恢复调度。
-4. 许可证、部署、评委访问、公开仓库与参赛提交，按后续授权处理。
+4. 应用部署、评委测试访问、演示视频与正式参赛提交；公开源码及 MIT 已完成。
