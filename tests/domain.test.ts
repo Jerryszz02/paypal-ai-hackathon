@@ -363,6 +363,40 @@ describe('authorization and immutable versions', () => {
     expect(c.reviewStatus).toBe('needs_review');
     expect(c.findings.some((f) => f.code === 'prior_manual_review')).toBe(true);
   });
+  it.each(['reject', 'request_info'] as const)(
+    'retains a finance %s through repeated submission, corrections and enabling automatic payment',
+    async (decision) => {
+      let c = await ready();
+      c = await service.submit('alex', c.id, c.version);
+      c = await service.review('morgan', c.id, c.version, {
+        decision,
+        reason: 'Finance needs an updated business justification.',
+      });
+      await policy(true);
+      const repeat = await service.submit('alex', c.id, c.version);
+      expect(repeat.reviewStatus).toBe(decision === 'reject' ? 'rejected' : 'needs_info');
+      expect(repeat.approval).toBeNull();
+      expect(repeat.paymentIntentId).toBeNull();
+      // Re-extraction resets the displayed review status, but cannot clear finance's hold.
+      c = await service.saveExtraction('alex', c.id, c.version, extraction(c));
+      c = await service.updateDraft('alex', c.id, c.version, {
+        partialExplanation: 'Added the requested business justification.',
+        fieldsConfirmed: true,
+      });
+      c = await service.submit('alex', c.id, c.version);
+      expect(c.reviewStatus).toBe('needs_review');
+      expect(c.approval).toBeNull();
+      expect(c.paymentIntentId).toBeNull();
+      c = await service.review('morgan', c.id, c.version, {
+        decision: 'approve',
+        reason: 'Checked the updated justification and explicitly resolved the earlier decision.',
+      });
+      expect(c.approval?.kind).toBe('manual');
+      await expect(service.preparePayment('morgan', c.id, c.version)).resolves.toMatchObject({
+        status: 'queued',
+      });
+    },
+  );
   it('requires a fresh manual decision when the monthly limit becomes a new concern before sending', async () => {
     await policy(false, { monthlyLimitMinor: 5000 });
     const first = await approvedManual(3000);
@@ -511,6 +545,63 @@ describe('durable payment intents and reconciliation', () => {
     expect(retry.id).not.toBe(p.id);
     expect(retry.senderBatchId).not.toBe(p.senderBatchId);
     expect((await service.getClaim('alex', c.id)).paymentHistory).toHaveLength(2);
+  });
+  it('allows finance to approve and replace a queued payment cancelled before sending', async () => {
+    await policy(true);
+    let c = await ready();
+    c = await service.submit('alex', c.id, c.version);
+    const original = c.payment!;
+    now = '2026-11-01T01:00:00.000Z';
+    expect(await service.acquirePayment(original.id)).toBeNull();
+    c = await service.getClaim('morgan', c.id);
+    expect(c.reviewStatus).toBe('needs_review');
+    expect(c.paymentStatus).toBe('cancelled');
+    expect(c.payment?.sentAt).toBeNull();
+    expect(c.findings.some((f) => f.code === 'cross_month')).toBe(true);
+    c = await service.review('morgan', c.id, c.version, {
+      decision: 'approve',
+      reason: 'Reviewed the original submission month and authorized sending in November.',
+    });
+    expect(c.reviewStatus).toBe('approved');
+    const replacement = await service.preparePayment('morgan', c.id, c.version);
+    expect(replacement.id).not.toBe(original.id);
+    expect(replacement.status).toBe('queued');
+    await expect(service.acquirePayment(replacement.id)).resolves.toMatchObject({ action: 'send' });
+    expect((await service.getClaim('alex', c.id)).paymentHistory).toHaveLength(2);
+  });
+  it('retains the current payment and allowance when an older failed attempt is reconciled again', async () => {
+    await policy(false, { monthlyLimitMinor: 4000 });
+    const c = await approvedManual(4000);
+    const first = await service.preparePayment('morgan', c.id, c.version);
+    await service.acquirePayment(first.id);
+    await service.recordPaymentResult(first.id, verified(first, 'failed'));
+    let reopened = await service.reopenAfterFailedPayment(
+      'morgan',
+      c.id,
+      c.version,
+      'Verified the first attempt failed; approve a corrected version.',
+    );
+    reopened = await service.updateDraft('alex', c.id, reopened.version, { fieldsConfirmed: true });
+    reopened = await service.submit('alex', c.id, reopened.version);
+    reopened = await service.review('morgan', c.id, reopened.version, {
+      decision: 'approve',
+      reason: 'Approved the corrected version after checking the failed payment.',
+    });
+    const current = await service.preparePayment('morgan', c.id, reopened.version);
+    await service.acquirePayment(current.id);
+    now = '2026-10-30T12:01:00.000Z';
+    await service.recordPaymentResult(first.id, verified(first, 'failed'));
+    const latest = await service.getClaim('alex', c.id);
+    expect(latest.paymentIntentId).toBe(current.id);
+    expect(latest.paymentStatus).toBe('processing');
+    expect(latest.payment?.status).toBe('processing');
+    expect(latest.paymentHistory.find((p) => p.id === first.id)?.lastReconciledAt).toBe(now);
+    await policy(true);
+    const another = await ready(100);
+    const submitted = await service.submit('alex', another.id, another.version);
+    expect(submitted.reviewStatus).toBe('needs_review');
+    expect(submitted.findings.some((f) => f.code === 'monthly_limit')).toBe(true);
+    expect(submitted.approval).toBeNull();
   });
   it('never permits reopening an unknown, unclaimed, paid or returned payment', async () => {
     const c = await approvedManual();

@@ -186,3 +186,91 @@ test('mobile claims remain usable and authorized CSV downloads', async ({ page }
   expect(download.suggestedFilename()).toBe('carry-claims.csv');
   await page.screenshot({ path: '.local/screenshots/e2e-claims-mobile.png', fullPage: true });
 });
+
+test('an unsent cancelled payment keeps applicant updates and finance review available', async ({
+  page,
+}) => {
+  await login(page, 'Alex Morgan');
+  const created = await page.request.post('/api/claims', {
+    headers: { Origin: origin },
+    data: {},
+  });
+  const draft = (await created.json()) as ClaimDetail;
+  const path = `/claims/${draft.id}`;
+  // Model the persisted result of a queued payment cancelled by the send-time recheck.
+  // Provider calls are not part of this UI regression.
+  const cancelled: ClaimDetail = {
+    ...draft,
+    merchant: 'Cancelled before send',
+    firstSubmittedAt: draft.createdAt,
+    reviewStatus: 'needs_review',
+    paymentStatus: 'cancelled',
+    paymentIntentId: 'unsent-cancellation',
+    payment: {
+      id: 'unsent-cancellation',
+      organizationId: draft.organizationId,
+      claimId: draft.id,
+      claimVersion: draft.version,
+      approvalId: 'invalidated-approval',
+      ownerId: draft.ownerId,
+      profileVersion: 1,
+      policyVersion: 1,
+      amountMinor: 2380,
+      currency: 'GBP',
+      recipientEmail: 'alex@example.test',
+      senderBatchId: 'unsent-batch',
+      senderItemId: 'unsent-item',
+      fingerprint: 'unsent-fingerprint',
+      status: 'cancelled',
+      mode: 'demo',
+      providerBatchId: null,
+      providerItemId: null,
+      transactionId: null,
+      providerStatus: null,
+      createdAt: draft.createdAt,
+      updatedAt: draft.updatedAt,
+      sentAt: null,
+      leaseUntil: null,
+      lastReconciledAt: null,
+      failureCode: 'approval_invalidated',
+    },
+  };
+  await page.route(`**/api${path}`, async (route) => {
+    await route.fulfill({ json: cancelled });
+  });
+  await page.goto(path);
+  await expect(page.getByRole('button', { name: 'Update claim', exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Update claim', exact: true }).click();
+  await expect(page.getByLabel('Merchant', { exact: true })).toHaveValue('Cancelled before send');
+
+  await page.getByRole('button', { name: 'Sign out', exact: true }).click();
+  await login(page, 'Morgan Chen');
+  await page.goto(path);
+  await expect(page.getByRole('button', { name: 'Approve claim', exact: true })).toBeVisible();
+  await expect(
+    page.getByRole('button', { name: 'Reopen for correction', exact: true }),
+  ).toHaveCount(0);
+
+  await page.route(`**/api${path}/review`, async (route) => {
+    cancelled.reviewStatus = 'approved';
+    await route.fulfill({ json: cancelled });
+  });
+  await page
+    .getByLabel('Decision reason')
+    .fill('Reviewed the conditions that cancelled the unsent payment.');
+  await page.getByRole('button', { name: 'Approve claim', exact: true }).click();
+  await page.getByRole('button', { name: 'Confirm approval', exact: true }).click();
+  await expect(
+    page.getByRole('button', { name: 'Simulate approved payment', exact: true }),
+  ).toBeVisible();
+
+  // A cancellation verified after sending still requires the explicit correction workflow.
+  cancelled.reviewStatus = 'needs_review';
+  cancelled.payment!.sentAt = draft.createdAt;
+  cancelled.payment!.lastReconciledAt = draft.updatedAt;
+  await page.reload();
+  await expect(page.getByRole('button', { name: 'Approve claim', exact: true })).toHaveCount(0);
+  await expect(
+    page.getByRole('button', { name: 'Reopen for correction', exact: true }),
+  ).toBeVisible();
+});

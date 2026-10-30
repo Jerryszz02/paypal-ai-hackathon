@@ -128,7 +128,11 @@ export function ClaimDetailView({ id }: { id: string }) {
     );
   const reviewer = data.member.role === 'reviewer';
   const owner = data.member.id === claim.ownerId;
-  const locked = [
+  const unsentCancellation =
+    claim.paymentStatus === 'cancelled' &&
+    claim.payment?.status === 'cancelled' &&
+    claim.payment.sentAt === null;
+  const locked = !unsentCancellation && [
     'processing',
     'unknown',
     'unclaimed',
@@ -144,7 +148,7 @@ export function ClaimDetailView({ id }: { id: string }) {
   const canPay =
     reviewer &&
     claim.reviewStatus === 'approved' &&
-    ['not_started', 'queued'].includes(claim.paymentStatus);
+    (['not_started', 'queued'].includes(claim.paymentStatus) || unsentCancellation);
   const canSync = reviewer && claim.paymentIntentId && !!claim.payment?.sentAt;
   const canReopen =
     reviewer &&

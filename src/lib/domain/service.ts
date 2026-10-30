@@ -669,6 +669,14 @@ export class ReimbursementService {
         return detail(s, c);
       if (frozenPaymentStatuses.includes(c.paymentStatus))
         throw new DomainError('payment_locked', 'A payment has started.', 409);
+      // Repeating submission is not a finance decision or a correction. Preserve the
+      // current rejection/information request until the applicant creates a new version.
+      if (
+        c.reviewStatus === 'rejected' ||
+        (c.reviewStatus === 'needs_info' &&
+          c.findings.some((finding) => finding.code === 'reviewer_information'))
+      )
+        return detail(s, c);
       if (!c.firstSubmittedAt) {
         c.firstSubmittedAt = this.now();
         c.submissionMonth = dateInZone(c.firstSubmittedAt, s.policy.timezone).slice(0, 7);
@@ -773,6 +781,15 @@ export class ReimbursementService {
           'Finance changed the decision; any unsent payment was cancelled.',
         );
         c.reviewStatus = review.decision === 'request_info' ? 'needs_info' : 'rejected';
+        // Keep human concerns across edits, extraction and policy changes. The rule
+        // evaluator carries them into prior_manual_review, requiring an explicit
+        // finance approval rather than allowing a later automatic approval.
+        c.manualReasons = [
+          ...new Set([
+            ...c.manualReasons,
+            review.decision === 'reject' ? 'reviewer_rejection' : 'reviewer_information',
+          ]),
+        ];
         this.event(s, c, a.id, review.decision, review.reason);
         if (review.decision === 'request_info')
           c.findings.push({
@@ -1104,7 +1121,7 @@ export class ReimbursementService {
       if (result.status === 'failed') p.lastReconciledAt = this.now(); // Definitive provider rejection, not a timeout.
       p.leaseUntil = null;
       p.updatedAt = this.now();
-      c.paymentStatus = p.status;
+      if (c.paymentIntentId === p.id) c.paymentStatus = p.status;
       this.event(
         s,
         c,
@@ -1129,7 +1146,7 @@ export class ReimbursementService {
       p.failureCode = failureCode;
       p.leaseUntil = null;
       p.updatedAt = this.now();
-      c.paymentStatus = 'unknown';
+      if (c.paymentIntentId === p.id) c.paymentStatus = 'unknown';
       this.event(
         s,
         c,
@@ -1182,7 +1199,9 @@ export class ReimbursementService {
       p.leaseUntil = null;
       p.updatedAt = this.now();
       p.lastReconciledAt = this.now();
-      c.paymentStatus = p.status;
+      // Webhooks may reconcile a superseded attempt. Preserve its verified history
+      // without replacing the current attempt's status or releasing its allowance.
+      if (c.paymentIntentId === p.id) c.paymentStatus = p.status;
       if (previous !== p.status)
         this.event(
           s,
