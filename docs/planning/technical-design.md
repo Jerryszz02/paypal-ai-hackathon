@@ -1,10 +1,19 @@
 # 技术设计：票据、审核与付款
 
-更新日期：2026-10-29（Europe/London）。状态：**待评审技术方案，尚未安装依赖、创建服务或实现代码**。用户已确定 API Key 接入方式；供应商和具体模型待选。
+更新日期：2026-10-30（Europe/London）。状态：**设计基线已进入实现；本地第一版与接入代码已实现，真实服务待验证**。API Key 接入选用 OpenAI Responses adapter；模型与调用预算待配置。
 
-需求基线：[产品设计与 MVP](prd.md)。实施顺序与验收：[开发计划](development-plan.md)。下文的模块、实体和操作名称均为拟议契约，不是现有代码清单。
+需求基线：[产品设计与 MVP](prd.md)。实施顺序与验收：[开发计划](development-plan.md)。下文保留设计约束；具体代码、SQL、接口与运行命令见[开发者指南](../developer-guide.md)。
 
-## 1. 推荐技术栈
+## 本轮实现取舍
+
+- Next.js App Router、React、TypeScript、Zod 与精确便士金额；版本固定在 `package-lock.json`。UI 使用本地系统字体、原生 CSS 与 Lucide，未引入 Tailwind／shadcn 的额外组件层。
+- `demo` 为明确选择的本地模式：PGlite 执行 PostgreSQL schema、受签名保护的合成角色、私有磁盘材料；只识别注册的合成文件哈希，任意上传不会伪装成 OCR。
+- `sandbox` 使用服务端 Supabase Auth、私有 Storage 与 `pg` 事务；浏览器对业务表无直接权限，全部操作经服务端组织／角色／所有权检查。账号、托管表和存储仍未实测。
+- OpenAI adapter 输出包括材料支持的类别与用途疑点；类别未知或与申报不符时转人工。PayPal adapter 固定 Sandbox 域名；创建响应只记录受理，到账必须由单笔对账确认。
+- 自动批准与付款意图在同一事务提交；手动批准后由财务另行确认付款。重试复用原 ID；未知结果、待领取保留额度。已核实失败／取消可由财务记录理由并开启新草稿纠正，退回不自动重付。
+- 持久恢复入口已实现，实际 Cron、webhook 可达性及部署仍待配置。本轮未创建云服务或调用真实供应商。
+
+## 1. 技术栈设计基线
 
 | 部分 | 推荐方案 | 原因与取舍 |
 | --- | --- | --- |
@@ -19,7 +28,7 @@
 | 验证 | Vitest 测规则与状态，Playwright 测页面与角色流程；独立真实 Sandbox 集成验证 | mock 测试和真实 provider 证据分别记录 |
 | 托管 | Vercel 为候选，数据与文件在 Supabase | M0 验证账户、费用、函数时限、上传路径、Cron 与 webhook 可达性后定案；本轮不部署 |
 
-依赖准确版本在实施时核查并固定，提交 lockfile；本轮不编造已安装版本或可运行命令。暂不使用自训练模型、向量数据库、复杂 agent 框架或 MCP 来执行付款。
+依赖准确版本已在本轮核查并固定；已提交 lockfile 与真实运行命令。暂不使用自训练模型、向量数据库、复杂 agent 框架或 MCP 来执行付款。
 
 ## 2. API Key 接入方案
 
@@ -35,7 +44,7 @@
 | `PAYPAL_CLIENT_ID`、`PAYPAL_CLIENT_SECRET`、`PAYPAL_WEBHOOK_ID` | 独立于 AI 的服务端配置；环境固定为 Sandbox，首版不提供 Live 切换按钮 |
 | Supabase URL、publishable key、server secret | 公共连接信息与 server secret 分开；高权限密钥不使用 `NEXT_PUBLIC_` 前缀 |
 
-这里只列配置名称，不创建 `.env` 或写入任何值。AI Key 不等于 PayPal 凭据；模型看不到付款凭据，也不能调用付款工具。
+变量示例在 `.env.example` 中，仅含占位值；真实值仍只在本地忽略的配置或部署密钥设置中。AI Key 不等于 PayPal 凭据；模型看不到付款凭据，也不能调用付款工具。
 
 ### 一次检查的输入与输出
 
@@ -145,4 +154,4 @@ flowchart TD
 - [OpenAI API 认证](https://developers.openai.com/api/reference/overview)、[结构化输出](https://developers.openai.com/api/docs/guides/structured-outputs)、[文件输入](https://developers.openai.com/api/docs/guides/file-inputs)、[数据控制](https://developers.openai.com/api/docs/guides/your-data)：候选 API Key／图片 PDF／schema 方案；具体模型质量与权限待 M0 测试。
 - [PayPal Payouts 概述](https://developer.paypal.com/payouts/use-payouts/overview)、[创建付款](https://developer.paypal.com/api/payments.payouts-batch/v1/payouts-post)、[webhook](https://developer.paypal.com/payouts/webhooks/)：Sandbox、状态和重试依据。
 
-需要评审的选型：Next.js + Supabase 组合、Vercel 托管候选、AI 供应商与模型／调用预算、上传限额。上线计划不得以当前文档替代权限、额度、真实 API 和部署验证。
+本轮采用 Next.js + Supabase 接入代码及显式本地模式；Vercel 仍只是托管候选。模型／调用预算、托管限额与真实 API 待验收，不能由当前代码或文档替代。

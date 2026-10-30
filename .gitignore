@@ -19,6 +19,9 @@ secrets*.json
 # Dependencies, generated output and local caches
 node_modules/
 .next/
+.next-e2e/
+.playwright-cli/
+next-env.d.ts
 .nuxt/
 .venv/
 venv/
@@ -41,6 +44,7 @@ test-results/
 
 # Local data and isolated checkouts
 .local/
+supabase/.temp/
 .worktrees/
 *.sqlite
 *.sqlite3
