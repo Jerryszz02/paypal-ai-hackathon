@@ -5,6 +5,7 @@ import path from 'node:path';
 import { createCanvas, type Canvas } from '@napi-rs/canvas';
 import {
   PDFArray,
+  PDFDict,
   PDFDocument,
   PDFName,
   PDFNumber,
@@ -81,8 +82,35 @@ class LocalBinaryDataFactory {
   }
 }
 
-async function checkPdfImages(bytes: Uint8Array) {
+async function checkPdfForRasterization(bytes: Uint8Array) {
   const pdf = await PDFDocument.load(bytes);
+  const appearanceNeedsReview = () => {
+    throw new ProviderError(
+      'PDF_APPEARANCE_REQUIRES_REVIEW',
+      'Receipt annotations or form fields require manual review.',
+    );
+  };
+  const form = pdf.catalog.lookupMaybe(PDFName.of('AcroForm'), PDFDict);
+  if (
+    form &&
+    ((form.lookupMaybe(PDFName.of('Fields'), PDFArray)?.size() ?? 0) > 0 ||
+      form.has(PDFName.of('XFA')))
+  )
+    appearanceNeedsReview();
+  for (const page of pdf.getPages()) {
+    const annotations = page.node.lookupMaybe(PDFName.of('Annots'), PDFArray);
+    for (const reference of annotations?.asArray() ?? []) {
+      const annotation = pdf.context.lookup(reference, PDFDict);
+      // annotationMode: 0 intentionally omits appearances and interactive forms.
+      // Only ordinary links without an appearance are safe to omit from receipt pixels.
+      if (
+        annotation.lookupMaybe(PDFName.of('Subtype'), PDFName)?.decodeText() !==
+          'Link' ||
+        annotation.has(PDFName.of('AP'))
+      )
+        appearanceNeedsReview();
+    }
+  }
   let totalImagePixels = 0;
   // Every indirect stream appears once, including images reached through nested Forms
   // and soft masks. Reusing one image reference on multiple pages does not recount it.
@@ -281,7 +309,7 @@ export async function prepareDeepSeekImages(
           );
         continue;
       }
-      await checkPdfImages(document.bytes);
+      await checkPdfForRasterization(document.bytes);
       const pdfjs = await import(
         /* webpackIgnore: true */ 'pdfjs-dist/legacy/build/pdf.mjs'
       );

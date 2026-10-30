@@ -1,6 +1,6 @@
 # 技术设计：票据、审核与付款
 
-更新日期：2026-10-30（Europe/London）。状态：**设计基线已进入实现；本地第一版与接入代码已实现，真实服务待验证**。API Key 接入选用 OpenAI Responses adapter；模型与调用预算待配置。
+更新日期：2026-10-30（Europe/London）。状态：**设计基线已进入实现；本地第一版与接入代码已实现，真实服务待验证**。用户选择 DeepSeek `deepseek-flash` 视觉 Responses 接入，保留 OpenAI adapter；真实 Key 与调用预算待配置。
 
 需求基线：[产品设计与 MVP](prd.md)。实施顺序与验收：[开发计划](development-plan.md)。下文保留设计约束；具体代码、SQL、接口与运行命令见[开发者指南](../developer-guide.md)。
 
@@ -8,10 +8,10 @@
 
 - Next.js App Router、React、TypeScript、Zod 与精确便士金额；版本固定在 `package-lock.json`。UI 使用本地系统字体、原生 CSS 与 Lucide，未引入 Tailwind／shadcn 的额外组件层。
 - `demo` 为明确选择的本地模式：PGlite 执行 PostgreSQL schema、受签名保护的合成角色、私有磁盘材料；只识别注册的合成文件哈希，任意上传不会伪装成 OCR。
-- `sandbox` 使用服务端 Supabase Auth、私有 Storage 与 `pg` 事务；浏览器对业务表无直接权限，全部操作经服务端组织／角色／所有权检查。账号、托管表和存储仍未实测。
-- OpenAI adapter 输出包括材料支持的类别与用途疑点；类别未知或与申报不符时转人工。PayPal adapter 固定 Sandbox 域名；创建响应只记录受理，到账必须由单笔对账确认。
+- `sandbox` 使用服务端 Supabase Auth、私有 Storage 与 `pg` 事务；浏览器对业务表无直接权限，全部操作经服务端组织／角色／所有权检查。Carry Sandbox 的三个受控账号登录、业务表 RLS／权限和私有存储探针已实测；本机数据库直连及完整应用流程仍待验收。
+- OpenAI／DeepSeek adapter 输出包括材料支持的类别与用途疑点；类别未知或与申报不符时转人工。PayPal adapter 固定 Sandbox 域名；创建响应只记录受理，到账必须由单笔对账确认。
 - 自动批准与付款意图在同一事务提交；手动批准后由财务另行确认付款。重试复用原 ID；未知结果、待领取保留额度。已核实失败／取消可由财务记录理由并开启新草稿纠正，退回不自动重付。
-- 持久恢复入口已实现，实际 Cron、webhook 可达性及部署仍待配置。本轮未创建云服务或调用真实供应商。
+- 持久恢复入口已实现，实际 Cron、webhook 可达性及部署仍待配置。Supabase 测试项目已创建并完成有限 API 验证，尚未调用真实模型或 PayPal。
 
 ## 1. 技术栈设计基线
 
@@ -22,7 +22,7 @@
 | 输入与 AI 输出校验 | Zod，货币转换为整数最小单位 | 统一表单、结构化结果与服务端边界；金额不使用浮点数累加 |
 | 数据与身份 | Supabase Postgres、Auth，SQL 迁移 | 使用关系、唯一约束和事务维护审批／付款一致性；不另引入 ORM 或自建认证 |
 | 票据存储 | Supabase Storage 私有 bucket | 原票保持私有；授权后短时访问；不把票据放在公开 Git 仓库 |
-| AI | 一个支持图片、PDF 和结构化输出的模型，通过服务端 API Key 调用 | 第一候选为 OpenAI 官方 SDK + Responses API；供应商和模型 ID 在 M0 确定，不预装多个供应商 |
+| AI | 一个支持图片、PDF 和结构化输出的模型，通过服务端 API Key 调用 | 当前实现保留 OpenAI Responses，并通过兼容 SDK 接入固定 DeepSeek API；DeepSeek PDF 在服务端逐页渲染，实际模型质量待验证 |
 | 付款 | PayPal REST Payouts API + OAuth 服务端 token + webhook | 单份报销用一个 payout item，先简化为一笔一批；保留 provider 状态与交易 ID |
 | 持久任务 | Postgres 任务／付款意图记录；受保护的服务端处理入口；Supabase Cron 定时恢复 | 任务先持久化再调用外部服务，崩溃后可恢复；不新增 Redis 或独立队列产品 |
 | 验证 | Vitest 测规则与状态，Playwright 测页面与角色流程；独立真实 Sandbox 集成验证 | mock 测试和真实 provider 证据分别记录 |
@@ -40,7 +40,7 @@
 | --- | --- |
 | `AI_PROVIDER`、`AI_MODEL` | 服务端指定实际供应商和模型，不由上传材料或用户请求自由选择 |
 | `AI_API_KEY` | 服务端 secret；由 adapter 映射到选定 SDK。仅部署密钥设置／本地忽略的环境文件保存 |
-| `AI_BASE_URL`（可选） | 仅选用确有需要的兼容服务时由维护者设置固定地址；不能仅凭“OpenAI compatible”假定支持 Responses、PDF 或严格 JSON Schema |
+| 供应商端点 | 由代码固定，不暴露 `AI_BASE_URL` 配置；DeepSeek 的 Responses、图片和结构化输出按官方接口实现，原生 PDF／Files 不作支持假设 |
 | `PAYPAL_CLIENT_ID`、`PAYPAL_CLIENT_SECRET`、`PAYPAL_WEBHOOK_ID` | 独立于 AI 的服务端配置；环境固定为 Sandbox，首版不提供 Live 切换按钮 |
 | Supabase URL、publishable key、server secret | 公共连接信息与 server secret 分开；高权限密钥不使用 `NEXT_PUBLIC_` 前缀 |
 
@@ -49,7 +49,7 @@
 ### 一次检查的输入与输出
 
 1. 浏览器把票据上传到经授权的私有存储，服务端复核文件归属、类型、大小和页数。后续请求只携带文件引用，不携带任意远程 URL。
-2. 服务端读取申请当前版本及所需票据，经固定的 provider adapter 调用模型。拟用支持视觉的模型直接处理图片／PDF，首版不叠加独立 OCR 服务；M0 用真实样本确认能力。
+2. 服务端读取申请当前版本及所需票据，经固定的 provider adapter 调用模型。OpenAI 路径传图片／PDF；DeepSeek 路径先在服务端逐页渲染 PDF，再传图片，不叠加独立 OCR 服务。材料准备失败转人工；M0 用真实样本确认能力。
 3. 模型返回结构化的商家、票据号、日期、币种、合计、明细、可读性问题、付款证明线索、用途匹配疑点与来源引用。关键字段无法确定时返回缺失值及原因，不填猜测值。
 4. 来源至少含材料 ID、页码、原文或可核对的位置描述；精确坐标只有可靠时才显示。结构合法仍可能内容错误，需校验并由申请人确认字段。
 5. 程序计算金额、期限、额度和重复线索，结合仍未解决的材料／语义疑点生成规则检查结果。向 UI 返回具体原因和下一步，不返回泛化的“AI 通过分数”。
@@ -58,7 +58,7 @@
 
 模型调用拟每版本一次，网络／限流错误最多再试一次；记录 provider request ID、模型、prompt/schema 版本、耗时和实际返回的用量。相同版本重复点击复用已有检查任务。超过组织调用限额或模型失败时保留申请并转人工／允许受控重试，不判为合规。
 
-单供应商足够首版。若用户已有其他供应商 Key，在实施前用同一批图片／PDF验证其接口；业务规则与付款流程保持相同，不为适配供应商降低校验要求。
+供应商由维护者在服务端配置，界面不提供切换。DeepSeek 与保留的 OpenAI 路径使用相同结构化校验、业务规则与付款边界；接口测试不能替代同一批图片／PDF 的真实模型验收。
 
 ## 3. 模块与信任边界
 

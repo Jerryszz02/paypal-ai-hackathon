@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { randomBytes } from 'node:crypto';
-import { PDFDocument, PDFName, PDFString, rgb } from 'pdf-lib';
+import { PDFDocument, PDFName, PDFString, StandardFonts, rgb } from 'pdf-lib';
 import sharp from 'sharp';
 import {
   DeepSeekReceiptProvider,
@@ -94,7 +94,103 @@ function contentFrom(create: ReturnType<typeof responseClient>['create']) {
   return input[0].content;
 }
 
+async function correctedPdf(
+  kind: 'Stamp' | 'FreeText' | 'form' | 'Link',
+): Promise<ReceiptDocument> {
+  const document = await PDFDocument.create();
+  const page = document.addPage([300, 200]);
+  page.drawText('Original total GBP 12.00', { x: 10, y: 160, size: 16 });
+  if (kind === 'form') {
+    const field = document.getForm().createTextField('corrected_total');
+    field.setText('Corrected total GBP 99.00');
+    field.addToPage(page, { x: 10, y: 80, width: 280, height: 40 });
+  } else {
+    const font = await document.embedFont(StandardFonts.Helvetica);
+    const appearance = document.context.register(
+      document.context.flateStream(
+        'q 1 1 1 rg 0 0 280 40 re f BT /F1 16 Tf 1 0 0 rg 10 12 Td (Corrected total GBP 99.00) Tj ET Q',
+        {
+          Type: 'XObject',
+          Subtype: 'Form',
+          BBox: [0, 0, 280, 40],
+          Resources: { Font: { F1: font.ref } },
+        },
+      ),
+    );
+    const annotation = document.context.register(
+      document.context.obj({
+        Type: 'Annot',
+        Subtype: kind,
+        Rect: [10, 80, 290, 120],
+        F: 4,
+        Contents: PDFString.of('Corrected total GBP 99.00'),
+        AP: { N: appearance },
+      }),
+    );
+    page.node.set(PDFName.of('Annots'), document.context.obj([annotation]));
+  }
+  return {
+    id: 'receipt-one',
+    name: 'corrected.pdf',
+    mediaType: 'application/pdf',
+    pages: 1,
+    bytes: await document.save(),
+  };
+}
+
 describe('DeepSeek receipt adapter', () => {
+  it.each(['Stamp', 'FreeText', 'form', 'Link'] as const)(
+    'routes a PDF with a visible %s correction to manual review before model input',
+    async (kind) => {
+      const { client, create } = responseClient();
+      const result = await provider(client).extract({
+        attachments: [await correctedPdf(kind)],
+        purpose: '',
+      });
+      expect(result).toMatchObject({
+        status: 'failed',
+        totalMinor: null,
+        errorCode: 'PDF_APPEARANCE_REQUIRES_REVIEW',
+      });
+      expect(result.issues.join(' ')).toContain('manual review');
+      expect(create).not.toHaveBeenCalled();
+    },
+  );
+
+  it('retains a normal link-only PDF without an appearance stream', async () => {
+    const document = await PDFDocument.create();
+    const page = document.addPage([300, 200]);
+    page.drawText('Total GBP 12.00', { x: 10, y: 160, size: 16 });
+    const annotation = document.context.register(
+      document.context.obj({
+        Type: 'Annot',
+        Subtype: 'Link',
+        Rect: [10, 10, 150, 30],
+        Border: [0, 0, 0],
+        A: {
+          S: 'URI',
+          URI: PDFString.of('https://example.test/synthetic-receipt'),
+        },
+      }),
+    );
+    page.node.set(PDFName.of('Annots'), document.context.obj([annotation]));
+    const { client, create } = responseClient();
+    const result = await provider(client).extract({
+      attachments: [
+        {
+          id: 'receipt-one',
+          name: 'link-only.pdf',
+          mediaType: 'application/pdf',
+          pages: 1,
+          bytes: await document.save(),
+        },
+      ],
+      purpose: '',
+    });
+    expect(result.status).toBe('complete');
+    expect(create).toHaveBeenCalledTimes(1);
+  });
+
   it('uses the fixed DeepSeek endpoint and a strict, tool-free image request', async () => {
     const fetch = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
       new Response(
