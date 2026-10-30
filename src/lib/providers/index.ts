@@ -1,7 +1,16 @@
 import 'server-only';
-import { DemoReceiptProvider, OpenAIReceiptProvider, type DemoReceiptFixture } from './extraction';
+import {
+  DemoReceiptProvider,
+  DeepSeekReceiptProvider,
+  OpenAIReceiptProvider,
+  type DemoReceiptFixture,
+} from './extraction';
 import { DemoPayoutProvider, PayPalSandboxProvider } from './paypal';
-import { ProviderError, type PayoutProvider, type ReceiptProvider } from './types';
+import {
+  ProviderError,
+  type PayoutProvider,
+  type ReceiptProvider,
+} from './types';
 
 export type {
   PayoutProvider,
@@ -11,7 +20,11 @@ export type {
   ReceiptRequest,
 } from './types';
 export { ProviderError } from './types';
-export { DemoReceiptProvider, OpenAIReceiptProvider } from './extraction';
+export {
+  DemoReceiptProvider,
+  DeepSeekReceiptProvider,
+  OpenAIReceiptProvider,
+} from './extraction';
 export { DemoPayoutProvider, PayPalSandboxProvider } from './paypal';
 
 export function getReceiptProvider(options: {
@@ -21,13 +34,18 @@ export function getReceiptProvider(options: {
   if (options.mode === 'demo') return new DemoReceiptProvider(options.fixtures);
   if (
     options.mode !== 'sandbox' ||
-    (process.env.AI_PROVIDER && process.env.AI_PROVIDER !== 'openai')
+    (process.env.AI_PROVIDER &&
+      !['openai', 'deepseek'].includes(process.env.AI_PROVIDER))
   )
     throw new ProviderError(
       'AI_NOT_CONFIGURED',
-      'Only the configured OpenAI receipt provider is supported.',
+      'Configure an OpenAI or DeepSeek receipt provider.',
     );
-  return new OpenAIReceiptProvider({
+  const ReceiptProvider =
+    process.env.AI_PROVIDER === 'deepseek'
+      ? DeepSeekReceiptProvider
+      : OpenAIReceiptProvider;
+  return new ReceiptProvider({
     apiKey: process.env.AI_API_KEY ?? '',
     model: process.env.AI_MODEL ?? '',
   });
@@ -36,7 +54,10 @@ export function getReceiptProvider(options: {
 export function getPayoutProvider(mode: 'demo' | 'sandbox'): PayoutProvider {
   if (mode === 'demo') return new DemoPayoutProvider();
   if (mode !== 'sandbox')
-    throw new ProviderError('MODE_MISMATCH', 'Select demo or Sandbox mode explicitly.');
+    throw new ProviderError(
+      'MODE_MISMATCH',
+      'Select demo or Sandbox mode explicitly.',
+    );
   return new PayPalSandboxProvider({
     clientId: process.env.PAYPAL_CLIENT_ID ?? '',
     clientSecret: process.env.PAYPAL_CLIENT_SECRET ?? '',

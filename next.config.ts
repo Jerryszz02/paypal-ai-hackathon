@@ -3,7 +3,15 @@ import type { NextConfig } from 'next';
 const config: NextConfig = {
   agentRules: false,
   distDir: process.env.CARRY_E2E === '1' ? '.next-e2e' : '.next',
-  serverExternalPackages: ['@electric-sql/pglite', 'pg'],
+  serverExternalPackages: ['@electric-sql/pglite', 'pg', '@napi-rs/canvas'],
+  outputFileTracingIncludes: {
+    '/api/*': [
+      './node_modules/pdfjs-dist/standard_fonts/**/*',
+      './node_modules/pdfjs-dist/cmaps/**/*',
+      './node_modules/pdfjs-dist/legacy/build/*.mjs',
+      './node_modules/pdfjs-dist/package.json',
+    ],
+  },
   poweredByHeader: false,
   async headers() {
     return [

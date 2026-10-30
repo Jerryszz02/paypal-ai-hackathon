@@ -2,7 +2,7 @@
 
 Carry helps a small team collect receipts, explain reimbursement checks, request missing information, and review payments in one place. It is the first implementation for the PayPal AI Hackathon 2026.
 
-**This version runs locally without credentials.** Demo extraction uses clearly labeled synthetic receipts; demo payments are simulated. The separate OpenAI, Supabase and PayPal Sandbox adapters are implemented, but real provider calls, a hosted deployment and competition submission have not been verified.
+**This version runs locally without credentials.** Demo extraction uses clearly labeled synthetic receipts; demo payments are simulated. Separate OpenAI / DeepSeek, Supabase and PayPal Sandbox adapters are implemented. Limited checks against a real Supabase test project passed for authentication, private storage and access controls; real AI / PayPal calls, the application's complete Sandbox flow, a hosted deployment and competition submission remain unverified.
 
 ## Run the local demo
 
@@ -44,6 +44,8 @@ Tests distinguish application rules, local PostgreSQL persistence, API boundarie
 ## Configure real Sandbox services
 
 See [Developer guide](docs/developer-guide.md) for server-only configuration, explicit database migration and controlled-account provisioning, private receipts, webhook verification and durable payment recovery. [`.env.example`](.env.example) lists the variables. Use `npm run dev:sandbox` only after configuring those services; missing configuration never silently switches to the demo.
+
+Receipt recognition supports either `AI_PROVIDER=openai` with a configured vision/file-capable model or `AI_PROVIDER=deepseek` with `AI_MODEL=deepseek-flash`. DeepSeek receives JPEG/PNG receipts as images and PDF receipts as locally rendered page images, with original attachment/page references. Both adapters still require real-service acceptance; selecting a provider does not verify model accuracy.
 
 The application supports Sandbox payments only. Creating cloud resources, sending real payouts, publishing a demo, changing repository visibility and submitting to Devpost are separate steps.
 

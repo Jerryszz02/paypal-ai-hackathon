@@ -59,8 +59,8 @@ Create or select the intended test project separately. Nothing in `npm run dev` 
 | `SUPABASE_PUBLISHABLE_KEY` | Auth client connection key; this implementation reads it on the server |
 | `SUPABASE_SECRET_KEY` | Server-only private receipt storage access |
 | `DATABASE_URL` | Server-only PostgreSQL connection string for the intended migrated project |
-| `AI_PROVIDER` | `openai` for the implemented real receipt adapter |
-| `AI_API_KEY`, `AI_MODEL` | Server-side OpenAI key and explicitly selected vision/file-capable model |
+| `AI_PROVIDER` | `openai` or `deepseek` for the receipt adapter |
+| `AI_API_KEY`, `AI_MODEL` | Server-side key for the selected provider; an explicitly selected OpenAI vision/file-capable model, or `deepseek-flash` for DeepSeek |
 | `PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET` | PayPal Sandbox Payouts OAuth credentials |
 | `PAYPAL_WEBHOOK_ID` | Webhook registration ID for signature verification |
 | `WORKER_SECRET` | At least 32 characters; bearer credential for the recovery endpoint |
@@ -103,7 +103,11 @@ Run `npm run dev:sandbox` after migration and provisioning. Sign in with the con
 
 ## AI checks and payment recovery
 
-OpenAI receives only the authorized receipt files and expense purpose, with `store: false`. It cannot access member directories, PayPal credentials or payment tools. Structured output and source references are validated, and the applicant confirms declared fields. Unknown amounts, missing evidence, category conflicts, duplicate signals and policy exceptions fail closed to information requests or human review. A valid JSON response is evidence to inspect, not proof that the receipt is authentic or that a payment is authorized.
+The selected AI provider receives only the authorized receipts and expense purpose, with `store: false`. It cannot access member directories, PayPal credentials or payment tools. Structured output and source references are validated, and the applicant confirms declared fields. Unknown amounts, missing evidence, category conflicts, duplicate signals and policy exceptions fail closed to information requests or human review. A valid JSON response is evidence to inspect, not proof that the receipt is authentic or that a payment is authorized.
+
+DeepSeek uses the fixed `https://api.deepseek.com` Responses endpoint and requires `deepseek-flash` for vision. Its API does not accept native PDF file inputs. The server revalidates JPEG/PNG/PDF bytes, rotates and resizes images, and renders every PDF page locally with PDF.js and the pinned native canvas package before sending inline PNG images. Markers preserve each original attachment ID and page number. No public receipt URL or Files API upload is created. Preparation is limited to the existing three files / 10 MB / five PDF pages, 2400 pixels per side, four megapixels per output image, 28 megapixels and 20 MB of PNG data overall. PDF image streams are checked before rendering: at most 16 megapixels / 8192 pixels per side per embedded image and 32 megapixels across unique image objects, including nested Form resources and masks. Shared references count once. Optional JPEG 2000 / JBIG2 image encodings require manual review. Native canvas allocations are additionally capped at 48 megapixels in aggregate. Extreme page boxes, invalid files, a failed page or an expired 15-second preparation deadline fail the complete extraction to manual review; no partial set of PDF pages is sent. Rendering uses cooperative cancellation and releases PDF tasks and native canvases on exit. PDF actions/forms are not mounted, external resources are not fetched, and only bundled local font/CMap assets may be read. These bounds do not establish recognition quality; unreadable evidence still requires human review.
+
+DeepSeek compatibility was checked on 2026-10-30 against the official [Responses API](https://api-docs.deepseek.com/guides/responses_api/), [Vision](https://api-docs.deepseek.com/guides/vision/) and [response format](https://api-docs.deepseek.com/api/create-response/) documentation. Adapter tests use local receipts and mocked responses; no real DeepSeek request or real-service acceptance has been performed.
 
 Amounts use integer pence. Approvals bind the claim version, amount, currency, separately confirmed recipient version and policy. Monthly allowance includes approved unpaid and paid claims in the first-submission month. Automatic approval and its queued payment intent commit together. Manual approval requires a separate explicit finance send action. Changes before dispatch invalidate the applicable approval; dispatch freezes recipient and amount. An automatic-payment switch change preserves an otherwise unchanged explicit manual approval.
 
@@ -116,6 +120,8 @@ For a verified failed or cancelled attempt, finance can explicitly authorize cor
 Register the Sandbox webhook as `POST <APP_ORIGIN>/api/webhooks/paypal` and set its `PAYPAL_WEBHOOK_ID`. The endpoint verifies PayPal's signature, locates an existing intent, queries the provider item and only then records the event ID. An event name or payload status never directly sets paid. A transient query failure remains retryable; repeated events cannot create a new payment.
 
 ## Verification and maintenance
+
+Limited Supabase acceptance on 2026-10-30 used an isolated free test project and synthetic accounts/data. The baseline schema was applied; all 14 application tables had RLS enabled and no direct `anon` / `authenticated` grants. The `receipts` bucket was private. Three controlled Auth accounts signed in successfully; service-side upload/download bytes matched, public download was denied, and direct authenticated table and Storage access was denied. Trusted memberships were read back as two applicants and one reviewer, with automatic payments disabled. These checks cover the hosted service boundaries only: the local application's PostgreSQL connection and complete Sandbox workflow remain unverified, as do real AI and PayPal calls. No public deployment was performed.
 
 ```sh
 npm run lint

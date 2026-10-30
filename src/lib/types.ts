@@ -81,7 +81,7 @@ export interface Extraction {
   paidEvidence: boolean;
   purposeMatches: boolean | null;
   status: 'complete' | 'failed';
-  provider: 'demo' | 'openai';
+  provider: 'demo' | 'openai' | 'deepseek';
   model: string;
   requestId?: string;
   schemaVersion?: string;
