@@ -57,4 +57,6 @@ The application supports Sandbox payments only. Creating cloud resources, sendin
 - [Hackathon requirements](docs/hackathon-rules.md) · [Official competition](https://paypalaihackathon.devpost.com/)
 - [Contributing instructions](AGENTS.md)
 
-The repository remains private. License selection, public source release and submission materials are not included in this implementation step.
+## License
+
+Carry's source code is available under the [MIT License](LICENSE). Dependencies retain their respective licenses. Public source availability does not establish a hosted deployment, verified provider integration or a completed competition submission.
