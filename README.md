@@ -1,31 +1,60 @@
-# PayPal AI Hackathon
+# Carry — receipt to reimbursement
 
-PayPal AI Hackathon 2026 项目工作区。
+Carry helps a small team collect receipts, explain reimbursement checks, request missing information, and review payments in one place. It is the first implementation for the PayPal AI Hackathon 2026.
 
-- 比赛官网：[PayPal AI Hackathon](https://paypalaihackathon.devpost.com/)
-- 产品方向：通用票据整理与报销助手。AI 检查材料，按组织规则请求补交、转人工或自动批准，再通过 PayPal 处理报销付款。
-- 当前阶段：方向已确定，产品设计与开发计划待评审；截至 2026-10-29，没有可运行的应用。
-- 拟议技术栈：Next.js + TypeScript、Supabase、服务端 AI API Key、PayPal Sandbox Payouts。详细选型与范围见规划文档。
-- 凭据只保存在服务端环境变量或部署平台密钥设置中，不进入浏览器或仓库。
+**This version runs locally without credentials.** Demo extraction uses clearly labeled synthetic receipts; demo payments are simulated. The separate OpenAI, Supabase and PayPal Sandbox adapters are implemented, but real provider calls, a hosted deployment and competition submission have not been verified.
 
-## 项目资料
+## Run the local demo
 
-- [比赛规则、截止时间与提交要求](docs/hackathon-rules.md)
-- [当前产品方向与选题历史](docs/project-direction.md)
-- [规划索引](docs/planning/README.md)
-- [产品设计与 MVP 范围](docs/planning/prd.md)
-- [技术栈与 AI / PayPal 接入设计](docs/planning/technical-design.md)
-- [开发顺序和里程碑](docs/planning/development-plan.md)
-- [项目协作约定](AGENTS.md)
+Requires Node.js 22.14 or later and npm.
 
-比赛规则备忘录核查于 2026-10-28；产品规划更新于 2026-10-29。规划描述目标行为，不作为实现或实际支付成功的证据。
+```bash
+npm ci
+npm run dev
+```
 
-## 仓库状态
+Open [Carry on localhost](http://127.0.0.1:3107). Choose **Alex Morgan** or **Sam Rivera** to submit claims, or **Morgan Chen** to review them. The preview binds only to this computer. No keys are needed, and demo mode makes no AI or payment network calls.
 
-仓库先以私有形式建立。比赛提交前需要公开源码并加入合适的开源许可证；公开、许可证选择和正式提交在准备好作品后处理。
+A short walkthrough:
 
-研究文档通过独立分支和 Pull Request 提交。后续实现从最新远端默认分支建立独立 worktree，并保持改动可审查。
+1. As Alex, open Settings and separately confirm a synthetic PayPal recipient such as `alex@example.test`.
+2. Create a claim, choose **Clear · £23.80**, inspect the receipt and confirm the expense details and payment evidence. Submit for checks.
+3. Sign out and enter as Morgan. Open the claim, review the findings and record an approval reason.
+4. Confirm the exact amount and recipient in **Simulate approved payment**. The initial result is Processing; **Synchronize existing payment** checks the simulated item and marks it Paid.
+5. Try **Blurry · £420** and its clear replacement: missing evidence requests information; a clear large expense still requires finance review. **Partial · £30** demonstrates a claim that differs from a £45 receipt.
 
-## 当前范围
+Automatic payments are off by default. Finance can enable the example GBP policy: £50 per claim, £200 per person per original submission month, and a 30-day submission window. Unknown values, unresolved evidence, unsupported categories, suspected duplicates and policy exceptions prevent automatic payment. AI does not choose the recipient or authorize money.
 
-已初始化项目资料和 Git 基础。比赛报名、PayPal Developer 账号配置、应用实现、部署和正式参赛提交分别跟踪，不因仓库创建而视为完成。
+Local database, uploads and session secrets persist under `.local/demo/` and are ignored by Git. Run one demo server per data directory. The demo accounts are not production authentication. Arbitrary uploads are retained for manual review; they are **not** recognized by simulated AI.
+
+## Verify
+
+```bash
+npm run lint
+npm run typecheck
+npm test
+npm run build
+npm run test:e2e
+```
+
+Browser tests use installed Google Chrome locally and isolated data on port 3108; CI installs Chromium. A production-mode local preview is available with `npm run build` followed by `npm run start:demo` after stopping the dev server.
+
+Tests distinguish application rules, local PostgreSQL persistence, API boundaries, provider test doubles and browser workflows. They do not establish real model accuracy or a completed PayPal Sandbox transaction.
+
+## Configure real Sandbox services
+
+See [Developer guide](docs/developer-guide.md) for server-only configuration, explicit database migration and controlled-account provisioning, private receipts, webhook verification and durable payment recovery. [`.env.example`](.env.example) lists the variables. Use `npm run dev:sandbox` only after configuring those services; missing configuration never silently switches to the demo.
+
+The application supports Sandbox payments only. Creating cloud resources, sending real payouts, publishing a demo, changing repository visibility and submitting to Devpost are separate steps.
+
+## Project notes
+
+- [Planning and verified implementation status](docs/planning/README.md)
+- [Product requirements and acceptance scenarios](docs/planning/prd.md)
+- [Technical design](docs/planning/technical-design.md)
+- [Development stages and remaining integration gates](docs/planning/development-plan.md)
+- [Direction and decision history](docs/project-direction.md)
+- [Hackathon requirements](docs/hackathon-rules.md) · [Official competition](https://paypalaihackathon.devpost.com/)
+- [Contributing instructions](AGENTS.md)
+
+The repository remains private. License selection, public source release and submission materials are not included in this implementation step.

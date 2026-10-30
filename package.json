@@ -1,0 +1,49 @@
+{
+  "name": "carry-reimbursements",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.14"
+  },
+  "scripts": {
+    "dev": "NEXT_TELEMETRY_DISABLED=1 APP_MODE=demo next dev --hostname 127.0.0.1 --port 3107",
+    "dev:sandbox": "NEXT_TELEMETRY_DISABLED=1 APP_MODE=sandbox next dev --hostname 127.0.0.1 --port 3107",
+    "build": "NEXT_TELEMETRY_DISABLED=1 next build",
+    "start": "NEXT_TELEMETRY_DISABLED=1 next start --hostname 127.0.0.1 --port 3107",
+    "lint": "eslint .",
+    "typecheck": "NEXT_TELEMETRY_DISABLED=1 next typegen && tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "check": "npm run lint && npm run typecheck && npm test && npm run build",
+    "start:demo": "NEXT_TELEMETRY_DISABLED=1 APP_MODE=demo next start --hostname 127.0.0.1 --port 3107"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "0.5.13",
+    "@supabase/ssr": "0.12.7",
+    "@supabase/supabase-js": "2.118.0",
+    "lucide-react": "1.64.0",
+    "next": "16.4.3",
+    "openai": "7.45.1",
+    "pdf-lib": "1.17.1",
+    "pdfjs-dist": "6.4.299",
+    "pg": "8.23.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "server-only": "0.0.1",
+    "sharp": "0.35.5",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/node": "22.20.5",
+    "@types/pg": "8.23.1",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.4.3",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "vitest": "5.0.5"
+  },
+  "type": "module"
+}
