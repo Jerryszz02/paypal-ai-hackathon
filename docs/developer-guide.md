@@ -69,11 +69,13 @@ Dependencies are pinned in `package.json` and `package-lock.json`. Missing Sandb
 
 ### Install the schema and private storage
 
-1. Review `supabase/migrations/20261029235851_reimbursement_core.sql` against the intended project. Apply this migration explicitly in a database transaction, for example through the Supabase SQL Editor. The web server does not install hosted tables on startup.
+1. Review the SQL files in `supabase/migrations/` against the intended project and apply them in filename order, each in an explicit transaction, for example through the Supabase SQL Editor. Existing projects that already installed `20261029235851_reimbursement_core.sql` must also apply `20261030200937_harden_reimbursement_functions.sql`; changing the baseline file alone does not upgrade a hosted project. The web server does not install hosted tables on startup.
 2. Verify the `receipts` Storage bucket exists and is private. The migration creates it when the Supabase Storage schema is available. If that bucket already existed, inspect its privacy and limits before using it; an existing public bucket is unsuitable.
 3. Run the project's Supabase database advisors when a real local stack or linked test project is available. The implementation was tested with local PostgreSQL semantics; hosted Auth, Storage and project-specific advisors still require verification.
 
 All application tables enable RLS and revoke direct `anon`/`authenticated` access. Browser requests go through the application API, where membership and ownership are enforced. The database connection is privileged and must stay on the server; RLS alone does not authorize privileged service queries. No authorization decision uses user-editable Auth metadata or a role sent by the browser.
+
+The hardening migration fixes the audit trigger's search path and, when Supabase's optional `rls_auto_enable()` function exists, removes direct execution by public API roles while preserving its owner and event trigger. Advisor notices about RLS tables without client policies are expected for this server-mediated design; do not add permissive policies to silence them.
 
 Uploads go through the server, which inspects the actual bytes and enforces JPEG/PNG/PDF, at most three files, 10 MB total, five PDF pages and a 40-megapixel image limit. Encrypted, malformed or active-content PDFs are rejected. PDF previews render drawing operations to a canvas using a locally bundled PDF.js worker; receipt scripts, forms and links are not mounted. The private file proxy rechecks claim access, returns no-store responses and never publishes a storage URL. Do not add public Storage policies to bypass this path.
 

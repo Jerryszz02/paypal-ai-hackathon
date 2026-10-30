@@ -116,7 +116,8 @@ create unique index if not exists reimbursement_payment_one_possible on reimburs
 create unique index if not exists reimbursement_payment_batch_unique on reimbursement_payments((payload->>'senderBatchId'));
 create unique index if not exists reimbursement_extraction_version_unique on reimbursement_extraction_jobs(claim_id, ((payload->>'version')::integer));
 -- Prevent accidental mutation of submitted versions and audit history, including by server code.
-create or replace function reimbursement_append_only() returns trigger language plpgsql as $$
+create or replace function reimbursement_append_only() returns trigger language plpgsql
+set search_path = pg_catalog as $$
 begin raise exception 'Reimbursement history is append-only'; end; $$;
 drop trigger if exists reimbursement_versions_immutable on reimbursement_versions;
 create trigger reimbursement_versions_immutable before update or delete on reimbursement_versions
@@ -151,3 +152,18 @@ begin
   end if;
 end $$;
 revoke all on function reimbursement_append_only() from public;
+
+-- Supabase's optional automatic-RLS event trigger must not be callable through the Data API.
+-- Revoking direct execution preserves its owner and existing event-trigger invocation.
+do $$
+declare r text;
+begin
+  if pg_catalog.to_regprocedure('public.rls_auto_enable()') is not null then
+    revoke execute on function public.rls_auto_enable() from public;
+    foreach r in array array['anon','authenticated'] loop
+      if exists (select 1 from pg_catalog.pg_roles where rolname = r) then
+        execute pg_catalog.format('revoke execute on function public.rls_auto_enable() from %I', r);
+      end if;
+    end loop;
+  end if;
+end $$;
