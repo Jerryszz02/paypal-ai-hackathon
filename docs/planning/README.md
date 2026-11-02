@@ -1,8 +1,8 @@
 # 报销助手规划索引
 
-更新／状态核查：2026-10-30（Europe/London）。工作模式：本地第一版已交付，继续配置受控测试服务和参赛草稿。用户已授权公开源码并使用 MIT，选择 DeepSeek 接入；真实 AI 与 PayPal Sandbox 验收仍待配置。
+更新／状态核查：2026-11-02（Europe/London）。工作模式：每周文档同步，核对 10 月 26 日至 11 月 1 日对话与已落盘后续交付记录；本轮不配置服务、不执行参赛提交。用户已授权公开源码并使用 MIT，选择 DeepSeek 接入；真实 AI 与 PayPal Sandbox 验收仍待配置。
 
-规范项目根目录：`/Users/jerryszz/Desktop/Projects/Hackathons/PayPal AI Hackathon`。[第一版 PR #3](https://github.com/Jerryszz02/paypal-ai-hackathon/pull/3) 已合并；[MIT PR #4](https://github.com/Jerryszz02/paypal-ai-hackathon/pull/4) 已合并，仓库已公开。Devpost 已保存草稿，尚未正式提交。
+规范项目根目录：`/Users/jerryszz/Desktop/Projects/Hackathons/PayPal AI Hackathon`。[第一版 PR #3](https://github.com/Jerryszz02/paypal-ai-hackathon/pull/3) 已合并；[MIT PR #4](https://github.com/Jerryszz02/paypal-ai-hackathon/pull/4) 已合并，仓库已公开。[DeepSeek PR #5](https://github.com/Jerryszz02/paypal-ai-hackathon/pull/5) 与 [数据库加固 PR #6](https://github.com/Jerryszz02/paypal-ai-hackathon/pull/6) 也已合并；本次核对基准为 `9dc962c`。Devpost 已保存草稿，尚未正式提交。
 
 ## 目标与当前事实
 
@@ -15,20 +15,27 @@
 
 用户确认的本轮边界允许先验收本地流程。因此 M0 的真实服务出口保持待验证，未被模拟结果替代；本地实现不宣称满足比赛要求的真实 AI＋Sandbox 集成。
 
+## 参赛草稿与阻塞的最后记录
+
+- 本机 `.local/submission/devpost-status.md` 更新于 2026-11-02，记录最终源码包 `carry-v1-9dc962c.zip` 已上传、保存并重新打开确认，工作版本链接固定到该提交。10 月 30 日锁屏造成的上传阻塞已在用户解锁后解除，不作为当前阻塞；本轮未操作屏幕或网站。
+- Devpost 最后有据状态仍为 Draft（3/5），不是正式参赛成功；仍缺 YouTube 演示视频，最终规则／条款接受和 Submit project 尚未执行。源码公开、MIT、草稿保存与上传均不能替代提交回执。
+- 最新本机交付记录仍将应用数据库直连、真实 AI／PayPal Sandbox 与完整应用流程标为待验收；有限 Supabase Auth／Storage 检查不证明完整闭环。本次维护仅同步状态，不读取密钥、恢复服务或发起外部操作。
+
 ## 文档集合
 
 | 文档 | 本次处理 | 权威边界 |
 | --- | --- | --- |
-| [产品设计与 MVP](prd.md) | 更新状态，保留需求基线 | 定义目标行为及 A01–A12；外部验收仍待执行 |
-| [技术设计](technical-design.md) | 补充本轮实现取舍 | 设计约束；当前代码结构以开发者指南为准 |
-| [开发计划](development-plan.md) | 更新阶段与实际验证边界 | 区分本地完成、真实服务门槛与发布准备 |
-| [开发者指南](../developer-guide.md) | 新增 | 描述代码现在如何运行、配置、迁移与恢复；当前实现事实冲突时以代码及本轮测试为准 |
+| [产品设计与 MVP](prd.md) | 保留需求基线 | 定义目标行为及 A01–A12；外部验收仍待执行 |
+| [技术设计](technical-design.md) | 保留实现取舍 | 设计约束；当前代码结构以开发者指南为准 |
+| [开发计划](development-plan.md) | 保留阶段与验证边界 | 区分本地完成、真实服务门槛与发布准备 |
+| [开发者指南](../developer-guide.md) | 保留 | 描述代码现在如何运行、配置、迁移与恢复；当前实现事实冲突时以代码及本轮测试为准 |
 
-配套更新：[根 README](../../README.md)、[项目协作约定](../../AGENTS.md)、[产品方向](../project-direction.md)。[比赛规则](../hackathon-rules.md)保留 2026-10-28 的历史核查日期；本轮没有重新核查参赛规则。
+本轮配套更新：[产品方向](../project-direction.md) 的模型选择与实现状态；[根 README](../../README.md)、[项目协作约定](../../AGENTS.md)及其余实现文档保留已有准确内容。[比赛规则](../hackathon-rules.md)保留 2026-10-28 的历史核查日期；本轮没有重新核查参赛规则。
 
 ## 验证证据与维护边界
 
 - 2026-10-30 首次实现时的历史本地验证：lint、TypeScript、生产构建通过；Vitest 7 个文件共 105 项通过，Chrome 4 条端到端用例通过；桌面和 375px 页面完成实际浏览器检查。外部服务测试未执行。
+- 后续合并交付的历史记录：PR #5 最终 head `846b140` 的 [CI](https://github.com/Jerryszz02/paypal-ai-hackathon/actions/runs/41122987921) 包含 130 项测试、生产构建与五条 Chromium 流程通过；这是对应实现提交的记录，本轮未重跑产品测试。
 - 自动化入口：`npm run lint`、`npm run typecheck`、`npm test`、`npm run build`、`npm run test:e2e`。测试源码在 `tests/`，浏览器结果在本地忽略的 `test-results/`／`playwright-report/`；结果以实施 PR 的最终验证记录为准。
 - 本地 PostgreSQL 验证包含并发额度、重启持久化、唯一付款、不可变历史及拒绝 `authenticated` 角色的直接读写。后续托管 Auth／Storage 探针为单独证据，范围见开发者指南，不代表完整应用 Sandbox 验收。
 - Provider 测试使用固定响应及失效输入；PDF／图片验证、签名会话、同源校验、权限与源引用、未知结果保留、旧事件不回退到账状态均有针对性验证。
