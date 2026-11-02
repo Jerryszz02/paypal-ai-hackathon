@@ -1,12 +1,12 @@
 # 当前产品方向
 
-更新日期：2026-10-30（Europe/London）。用户已认可**通用票据整理与报销助手**计划，并授权实现第一版；本轮明确选择本地流程与真实服务接入代码，外部调用留待配置后验收。工作名称 Carry。
+更新日期：2026-11-02（Europe/London）。用户已认可**通用票据整理与报销助手**计划，并授权实现第一版；本轮明确选择本地流程与真实服务接入代码，外部调用留待配置后验收。工作名称 Carry。
 
 ## 已确定的方向
 
 组织配置报销规则；报销人提交票据和用途；AI 提取内容并指出疑点，程序根据明确规则分流为自动批准、请求补交或人工审核；通过审批的申请由 PayPal Sandbox Payouts 付款，并跟踪单笔付款结果。
 
-AI 使用服务端 API Key；本轮实现 OpenAI Responses adapter，具体模型与费用预算待配置。Supabase 与 PayPal Sandbox 接入代码已提供；本地 demo 明确使用模拟识别与付款，不调用外部供应商。
+AI 使用服务端 API Key；用户已选择 DeepSeek，`deepseek-flash` Responses adapter 与本地 PDF 转图片已实现，同时保留 OpenAI Responses adapter。模型 Key 与费用预算待配置，真实调用和识别质量仍未验收。Supabase 与 PayPal Sandbox 接入代码已提供；本地 demo 明确使用模拟识别与付款，不调用外部供应商。
 
 ## 设计与开发计划入口
 
