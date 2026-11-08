@@ -1,0 +1,296 @@
+[
+  {
+    "text": "Carry",
+    "startMs": 220,
+    "endMs": 800,
+    "timestampMs": 510,
+    "confidence": null
+  },
+  {
+    "text": " combines",
+    "startMs": 800,
+    "endMs": 1180,
+    "timestampMs": 990,
+    "confidence": null
+  },
+  {
+    "text": " receipt",
+    "startMs": 1180,
+    "endMs": 1580,
+    "timestampMs": 1380,
+    "confidence": null
+  },
+  {
+    "text": " evidence,",
+    "startMs": 1580,
+    "endMs": 2040,
+    "timestampMs": 1810,
+    "confidence": null
+  },
+  {
+    "text": " explicit",
+    "startMs": 2360,
+    "endMs": 2860,
+    "timestampMs": 2610,
+    "confidence": null
+  },
+  {
+    "text": " rules,",
+    "startMs": 2860,
+    "endMs": 3280,
+    "timestampMs": 3070,
+    "confidence": null
+  },
+  {
+    "text": " human",
+    "startMs": 3420,
+    "endMs": 3880,
+    "timestampMs": 3650,
+    "confidence": null
+  },
+  {
+    "text": " review,",
+    "startMs": 3880,
+    "endMs": 4280,
+    "timestampMs": 4080,
+    "confidence": null
+  },
+  {
+    "text": " and",
+    "startMs": 4420,
+    "endMs": 4680,
+    "timestampMs": 4550,
+    "confidence": null
+  },
+  {
+    "text": " payment",
+    "startMs": 4680,
+    "endMs": 5120,
+    "timestampMs": 4900,
+    "confidence": null
+  },
+  {
+    "text": " tracking.",
+    "startMs": 5120,
+    "endMs": 5700,
+    "timestampMs": 5410,
+    "confidence": null
+  },
+  {
+    "text": " Real",
+    "startMs": 5940,
+    "endMs": 6260,
+    "timestampMs": 6100,
+    "confidence": null
+  },
+  {
+    "text": " AI",
+    "startMs": 6260,
+    "endMs": 6660,
+    "timestampMs": 6460,
+    "confidence": null
+  },
+  {
+    "text": " calls",
+    "startMs": 6660,
+    "endMs": 6980,
+    "timestampMs": 6820,
+    "confidence": null
+  },
+  {
+    "text": " and",
+    "startMs": 6980,
+    "endMs": 7300,
+    "timestampMs": 7140,
+    "confidence": null
+  },
+  {
+    "text": " PayPal",
+    "startMs": 7300,
+    "endMs": 7780,
+    "timestampMs": 7540,
+    "confidence": null
+  },
+  {
+    "text": " Sandbox",
+    "startMs": 7780,
+    "endMs": 8540,
+    "timestampMs": 8160,
+    "confidence": null
+  },
+  {
+    "text": " transactions",
+    "startMs": 8540,
+    "endMs": 8600,
+    "timestampMs": 8570,
+    "confidence": null
+  },
+  {
+    "text": " remain",
+    "startMs": 8920,
+    "endMs": 9140,
+    "timestampMs": 9030,
+    "confidence": null
+  },
+  {
+    "text": " to",
+    "startMs": 9140,
+    "endMs": 9260,
+    "timestampMs": 9200,
+    "confidence": null
+  },
+  {
+    "text": " be",
+    "startMs": 9260,
+    "endMs": 9680,
+    "timestampMs": 9470,
+    "confidence": null
+  },
+  {
+    "text": " verified.",
+    "startMs": 9680,
+    "endMs": 10280,
+    "timestampMs": 9980,
+    "confidence": null
+  },
+  {
+    "text": " The",
+    "startMs": 10380,
+    "endMs": 10680,
+    "timestampMs": 10530,
+    "confidence": null
+  },
+  {
+    "text": " working",
+    "startMs": 10680,
+    "endMs": 11000,
+    "timestampMs": 10840,
+    "confidence": null
+  },
+  {
+    "text": " local",
+    "startMs": 11000,
+    "endMs": 11320,
+    "timestampMs": 11160,
+    "confidence": null
+  },
+  {
+    "text": " demo",
+    "startMs": 11320,
+    "endMs": 11640,
+    "timestampMs": 11480,
+    "confidence": null
+  },
+  {
+    "text": " and",
+    "startMs": 11640,
+    "endMs": 12060,
+    "timestampMs": 11850,
+    "confidence": null
+  },
+  {
+    "text": " MIT",
+    "startMs": 12060,
+    "endMs": 12360,
+    "timestampMs": 12210,
+    "confidence": null
+  },
+  {
+    "text": " licensed",
+    "startMs": 12360,
+    "endMs": 12740,
+    "timestampMs": 12550,
+    "confidence": null
+  },
+  {
+    "text": " source",
+    "startMs": 12740,
+    "endMs": 12860,
+    "timestampMs": 12800,
+    "confidence": null
+  },
+  {
+    "text": " are",
+    "startMs": 13000,
+    "endMs": 13260,
+    "timestampMs": 13130,
+    "confidence": null
+  },
+  {
+    "text": " available",
+    "startMs": 13260,
+    "endMs": 13680,
+    "timestampMs": 13470,
+    "confidence": null
+  },
+  {
+    "text": " today.",
+    "startMs": 13680,
+    "endMs": 14200,
+    "timestampMs": 13940,
+    "confidence": null
+  },
+  {
+    "text": " Carry,",
+    "startMs": 14500,
+    "endMs": 14740,
+    "timestampMs": 14620,
+    "confidence": null
+  },
+  {
+    "text": " from",
+    "startMs": 14900,
+    "endMs": 15240,
+    "timestampMs": 15070,
+    "confidence": null
+  },
+  {
+    "text": " receipt",
+    "startMs": 15240,
+    "endMs": 15480,
+    "timestampMs": 15360,
+    "confidence": null
+  },
+  {
+    "text": " to",
+    "startMs": 15480,
+    "endMs": 15940,
+    "timestampMs": 15710,
+    "confidence": null
+  },
+  {
+    "text": " reimbursement,",
+    "startMs": 15940,
+    "endMs": 16240,
+    "timestampMs": 16090,
+    "confidence": null
+  },
+  {
+    "text": " with",
+    "startMs": 16380,
+    "endMs": 16720,
+    "timestampMs": 16550,
+    "confidence": null
+  },
+  {
+    "text": " every",
+    "startMs": 16720,
+    "endMs": 17100,
+    "timestampMs": 16910,
+    "confidence": null
+  },
+  {
+    "text": " decision",
+    "startMs": 17100,
+    "endMs": 17640,
+    "timestampMs": 17370,
+    "confidence": null
+  },
+  {
+    "text": " explained.",
+    "startMs": 17640,
+    "endMs": 17952,
+    "timestampMs": 17796,
+    "confidence": null
+  }
+]

@@ -1,0 +1,254 @@
+[
+  {
+    "text": "Morgan,",
+    "startMs": 440,
+    "endMs": 640,
+    "timestampMs": 540,
+    "confidence": null
+  },
+  {
+    "text": " the",
+    "startMs": 720,
+    "endMs": 1060,
+    "timestampMs": 890,
+    "confidence": null
+  },
+  {
+    "text": " finance",
+    "startMs": 1060,
+    "endMs": 1480,
+    "timestampMs": 1270,
+    "confidence": null
+  },
+  {
+    "text": " reviewer,",
+    "startMs": 1480,
+    "endMs": 1840,
+    "timestampMs": 1660,
+    "confidence": null
+  },
+  {
+    "text": " checks",
+    "startMs": 2080,
+    "endMs": 2320,
+    "timestampMs": 2200,
+    "confidence": null
+  },
+  {
+    "text": " the",
+    "startMs": 2320,
+    "endMs": 2620,
+    "timestampMs": 2470,
+    "confidence": null
+  },
+  {
+    "text": " original",
+    "startMs": 2620,
+    "endMs": 3100,
+    "timestampMs": 2860,
+    "confidence": null
+  },
+  {
+    "text": " receipt",
+    "startMs": 3100,
+    "endMs": 3620,
+    "timestampMs": 3360,
+    "confidence": null
+  },
+  {
+    "text": " and",
+    "startMs": 3620,
+    "endMs": 3980,
+    "timestampMs": 3800,
+    "confidence": null
+  },
+  {
+    "text": " records",
+    "startMs": 3980,
+    "endMs": 4200,
+    "timestampMs": 4090,
+    "confidence": null
+  },
+  {
+    "text": " an",
+    "startMs": 4200,
+    "endMs": 4560,
+    "timestampMs": 4380,
+    "confidence": null
+  },
+  {
+    "text": " approval",
+    "startMs": 4560,
+    "endMs": 5040,
+    "timestampMs": 4800,
+    "confidence": null
+  },
+  {
+    "text": " reason.",
+    "startMs": 5040,
+    "endMs": 5520,
+    "timestampMs": 5280,
+    "confidence": null
+  },
+  {
+    "text": " That",
+    "startMs": 5680,
+    "endMs": 5980,
+    "timestampMs": 5830,
+    "confidence": null
+  },
+  {
+    "text": " approval",
+    "startMs": 5980,
+    "endMs": 6620,
+    "timestampMs": 6300,
+    "confidence": null
+  },
+  {
+    "text": " belongs",
+    "startMs": 6620,
+    "endMs": 6920,
+    "timestampMs": 6770,
+    "confidence": null
+  },
+  {
+    "text": " to",
+    "startMs": 6920,
+    "endMs": 7180,
+    "timestampMs": 7050,
+    "confidence": null
+  },
+  {
+    "text": " this",
+    "startMs": 7180,
+    "endMs": 7420,
+    "timestampMs": 7300,
+    "confidence": null
+  },
+  {
+    "text": " claim",
+    "startMs": 7420,
+    "endMs": 7860,
+    "timestampMs": 7640,
+    "confidence": null
+  },
+  {
+    "text": " version,",
+    "startMs": 7860,
+    "endMs": 8140,
+    "timestampMs": 8000,
+    "confidence": null
+  },
+  {
+    "text": " amount,",
+    "startMs": 8480,
+    "endMs": 8740,
+    "timestampMs": 8610,
+    "confidence": null
+  },
+  {
+    "text": " policy,",
+    "startMs": 9100,
+    "endMs": 9420,
+    "timestampMs": 9260,
+    "confidence": null
+  },
+  {
+    "text": " and",
+    "startMs": 9480,
+    "endMs": 9880,
+    "timestampMs": 9680,
+    "confidence": null
+  },
+  {
+    "text": " recipient.",
+    "startMs": 9880,
+    "endMs": 10520,
+    "timestampMs": 10200,
+    "confidence": null
+  },
+  {
+    "text": " The",
+    "startMs": 10680,
+    "endMs": 10980,
+    "timestampMs": 10830,
+    "confidence": null
+  },
+  {
+    "text": " decision",
+    "startMs": 10980,
+    "endMs": 11480,
+    "timestampMs": 11230,
+    "confidence": null
+  },
+  {
+    "text": " history",
+    "startMs": 11480,
+    "endMs": 11920,
+    "timestampMs": 11700,
+    "confidence": null
+  },
+  {
+    "text": " preserves",
+    "startMs": 11920,
+    "endMs": 12280,
+    "timestampMs": 12100,
+    "confidence": null
+  },
+  {
+    "text": " what",
+    "startMs": 12280,
+    "endMs": 12460,
+    "timestampMs": 12370,
+    "confidence": null
+  },
+  {
+    "text": " was",
+    "startMs": 12460,
+    "endMs": 12920,
+    "timestampMs": 12690,
+    "confidence": null
+  },
+  {
+    "text": " reviewed",
+    "startMs": 12920,
+    "endMs": 13460,
+    "timestampMs": 13190,
+    "confidence": null
+  },
+  {
+    "text": " and",
+    "startMs": 13460,
+    "endMs": 13720,
+    "timestampMs": 13590,
+    "confidence": null
+  },
+  {
+    "text": " why",
+    "startMs": 13720,
+    "endMs": 13860,
+    "timestampMs": 13790,
+    "confidence": null
+  },
+  {
+    "text": " it",
+    "startMs": 13860,
+    "endMs": 13980,
+    "timestampMs": 13920,
+    "confidence": null
+  },
+  {
+    "text": " was",
+    "startMs": 13980,
+    "endMs": 14360,
+    "timestampMs": 14170,
+    "confidence": null
+  },
+  {
+    "text": " approved.",
+    "startMs": 14360,
+    "endMs": 14560,
+    "timestampMs": 14460,
+    "confidence": null
+  }
+]

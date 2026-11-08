@@ -1,0 +1,289 @@
+[
+  {
+    "text": "Alex",
+    "startMs": 320,
+    "endMs": 540,
+    "timestampMs": 430,
+    "confidence": null
+  },
+  {
+    "text": " submits",
+    "startMs": 540,
+    "endMs": 860,
+    "timestampMs": 700,
+    "confidence": null
+  },
+  {
+    "text": " a",
+    "startMs": 860,
+    "endMs": 1140,
+    "timestampMs": 1000,
+    "confidence": null
+  },
+  {
+    "text": " travel",
+    "startMs": 1140,
+    "endMs": 1560,
+    "timestampMs": 1350,
+    "confidence": null
+  },
+  {
+    "text": " expense.",
+    "startMs": 1560,
+    "endMs": 2160,
+    "timestampMs": 1860,
+    "confidence": null
+  },
+  {
+    "text": " The",
+    "startMs": 2280,
+    "endMs": 2580,
+    "timestampMs": 2430,
+    "confidence": null
+  },
+  {
+    "text": " receipt",
+    "startMs": 2580,
+    "endMs": 3000,
+    "timestampMs": 2790,
+    "confidence": null
+  },
+  {
+    "text": " stays",
+    "startMs": 3000,
+    "endMs": 3580,
+    "timestampMs": 3290,
+    "confidence": null
+  },
+  {
+    "text": " beside",
+    "startMs": 3580,
+    "endMs": 3860,
+    "timestampMs": 3720,
+    "confidence": null
+  },
+  {
+    "text": " its",
+    "startMs": 3860,
+    "endMs": 4320,
+    "timestampMs": 4090,
+    "confidence": null
+  },
+  {
+    "text": " extracted",
+    "startMs": 4320,
+    "endMs": 4900,
+    "timestampMs": 4610,
+    "confidence": null
+  },
+  {
+    "text": " details,",
+    "startMs": 4900,
+    "endMs": 5340,
+    "timestampMs": 5120,
+    "confidence": null
+  },
+  {
+    "text": " making",
+    "startMs": 5480,
+    "endMs": 5700,
+    "timestampMs": 5590,
+    "confidence": null
+  },
+  {
+    "text": " the",
+    "startMs": 5700,
+    "endMs": 6120,
+    "timestampMs": 5910,
+    "confidence": null
+  },
+  {
+    "text": " evidence",
+    "startMs": 6120,
+    "endMs": 6460,
+    "timestampMs": 6290,
+    "confidence": null
+  },
+  {
+    "text": " easy",
+    "startMs": 6460,
+    "endMs": 6740,
+    "timestampMs": 6600,
+    "confidence": null
+  },
+  {
+    "text": " to",
+    "startMs": 6740,
+    "endMs": 7120,
+    "timestampMs": 6930,
+    "confidence": null
+  },
+  {
+    "text": " inspect.",
+    "startMs": 7120,
+    "endMs": 7820,
+    "timestampMs": 7470,
+    "confidence": null
+  },
+  {
+    "text": " Alex",
+    "startMs": 8160,
+    "endMs": 8540,
+    "timestampMs": 8350,
+    "confidence": null
+  },
+  {
+    "text": " reviews",
+    "startMs": 8540,
+    "endMs": 8780,
+    "timestampMs": 8660,
+    "confidence": null
+  },
+  {
+    "text": " the",
+    "startMs": 8780,
+    "endMs": 9140,
+    "timestampMs": 8960,
+    "confidence": null
+  },
+  {
+    "text": " amount,",
+    "startMs": 9140,
+    "endMs": 9560,
+    "timestampMs": 9350,
+    "confidence": null
+  },
+  {
+    "text": " confirms",
+    "startMs": 9960,
+    "endMs": 10200,
+    "timestampMs": 10080,
+    "confidence": null
+  },
+  {
+    "text": " the",
+    "startMs": 10200,
+    "endMs": 10600,
+    "timestampMs": 10400,
+    "confidence": null
+  },
+  {
+    "text": " expense",
+    "startMs": 10600,
+    "endMs": 10880,
+    "timestampMs": 10740,
+    "confidence": null
+  },
+  {
+    "text": " and",
+    "startMs": 10880,
+    "endMs": 11160,
+    "timestampMs": 11020,
+    "confidence": null
+  },
+  {
+    "text": " payment",
+    "startMs": 11160,
+    "endMs": 11600,
+    "timestampMs": 11380,
+    "confidence": null
+  },
+  {
+    "text": " evidence,",
+    "startMs": 11600,
+    "endMs": 12040,
+    "timestampMs": 11820,
+    "confidence": null
+  },
+  {
+    "text": " and",
+    "startMs": 12220,
+    "endMs": 12400,
+    "timestampMs": 12310,
+    "confidence": null
+  },
+  {
+    "text": " submits",
+    "startMs": 12400,
+    "endMs": 12800,
+    "timestampMs": 12600,
+    "confidence": null
+  },
+  {
+    "text": " the",
+    "startMs": 12800,
+    "endMs": 13080,
+    "timestampMs": 12940,
+    "confidence": null
+  },
+  {
+    "text": " claim.",
+    "startMs": 13080,
+    "endMs": 13680,
+    "timestampMs": 13380,
+    "confidence": null
+  },
+  {
+    "text": " The",
+    "startMs": 13840,
+    "endMs": 14320,
+    "timestampMs": 14080,
+    "confidence": null
+  },
+  {
+    "text": " reimbursement",
+    "startMs": 14320,
+    "endMs": 14820,
+    "timestampMs": 14570,
+    "confidence": null
+  },
+  {
+    "text": " recipient",
+    "startMs": 14820,
+    "endMs": 15180,
+    "timestampMs": 15000,
+    "confidence": null
+  },
+  {
+    "text": " is",
+    "startMs": 15180,
+    "endMs": 15560,
+    "timestampMs": 15370,
+    "confidence": null
+  },
+  {
+    "text": " confirmed",
+    "startMs": 15560,
+    "endMs": 16000,
+    "timestampMs": 15780,
+    "confidence": null
+  },
+  {
+    "text": " separately",
+    "startMs": 16000,
+    "endMs": 16320,
+    "timestampMs": 16160,
+    "confidence": null
+  },
+  {
+    "text": " in",
+    "startMs": 16320,
+    "endMs": 16460,
+    "timestampMs": 16390,
+    "confidence": null
+  },
+  {
+    "text": " their",
+    "startMs": 16460,
+    "endMs": 16880,
+    "timestampMs": 16670,
+    "confidence": null
+  },
+  {
+    "text": " profile.",
+    "startMs": 16880,
+    "endMs": 17040,
+    "timestampMs": 16960,
+    "confidence": null
+  }
+]

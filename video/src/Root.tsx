@@ -1,0 +1,93 @@
+import { Composition, Folder } from "remotion";
+import { CarryVideo } from "./CarryVideo";
+import {
+  Applicant,
+  Checks,
+  Closing,
+  Exception,
+  Opening,
+  Overview,
+  Payment,
+  Review,
+} from "./Scenes";
+
+export const RemotionRoot: React.FC = () => {
+  return (
+    <>
+      <Composition
+        id="CarryDemo"
+        component={CarryVideo}
+        durationInFrames={4800}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Folder name="Scenes">
+        <Composition
+          id="Opening"
+          component={Opening}
+          durationInFrames={360}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Overview"
+          component={Overview}
+          durationInFrames={390}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Applicant"
+          component={Applicant}
+          durationInFrames={750}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Checks"
+          component={Checks}
+          durationInFrames={600}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Review"
+          component={Review}
+          durationInFrames={660}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Payment"
+          component={Payment}
+          durationInFrames={750}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Exception"
+          component={Exception}
+          durationInFrames={690}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Closing"
+          component={Closing}
+          durationInFrames={600}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+      </Folder>
+    </>
+  );
+};

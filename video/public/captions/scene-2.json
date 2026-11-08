@@ -1,0 +1,191 @@
+[
+  {
+    "text": "Carry",
+    "startMs": 240,
+    "endMs": 620,
+    "timestampMs": 430,
+    "confidence": null
+  },
+  {
+    "text": " brings",
+    "startMs": 620,
+    "endMs": 880,
+    "timestampMs": 750,
+    "confidence": null
+  },
+  {
+    "text": " those",
+    "startMs": 880,
+    "endMs": 1180,
+    "timestampMs": 1030,
+    "confidence": null
+  },
+  {
+    "text": " steps",
+    "startMs": 1180,
+    "endMs": 1500,
+    "timestampMs": 1340,
+    "confidence": null
+  },
+  {
+    "text": " into",
+    "startMs": 1500,
+    "endMs": 1820,
+    "timestampMs": 1660,
+    "confidence": null
+  },
+  {
+    "text": " one",
+    "startMs": 1820,
+    "endMs": 2140,
+    "timestampMs": 1980,
+    "confidence": null
+  },
+  {
+    "text": " traceable",
+    "startMs": 2140,
+    "endMs": 2820,
+    "timestampMs": 2480,
+    "confidence": null
+  },
+  {
+    "text": " workflow.",
+    "startMs": 2820,
+    "endMs": 3400,
+    "timestampMs": 3110,
+    "confidence": null
+  },
+  {
+    "text": " This",
+    "startMs": 3600,
+    "endMs": 3840,
+    "timestampMs": 3720,
+    "confidence": null
+  },
+  {
+    "text": " walkthrough",
+    "startMs": 3840,
+    "endMs": 4740,
+    "timestampMs": 4290,
+    "confidence": null
+  },
+  {
+    "text": " uses",
+    "startMs": 4740,
+    "endMs": 5300,
+    "timestampMs": 5020,
+    "confidence": null
+  },
+  {
+    "text": " synthetic",
+    "startMs": 5300,
+    "endMs": 5820,
+    "timestampMs": 5560,
+    "confidence": null
+  },
+  {
+    "text": " receipts",
+    "startMs": 5820,
+    "endMs": 6240,
+    "timestampMs": 6030,
+    "confidence": null
+  },
+  {
+    "text": " and",
+    "startMs": 6440,
+    "endMs": 7040,
+    "timestampMs": 6740,
+    "confidence": null
+  },
+  {
+    "text": " simulated",
+    "startMs": 7040,
+    "endMs": 7740,
+    "timestampMs": 7390,
+    "confidence": null
+  },
+  {
+    "text": " extraction",
+    "startMs": 7740,
+    "endMs": 8000,
+    "timestampMs": 7870,
+    "confidence": null
+  },
+  {
+    "text": " and",
+    "startMs": 8000,
+    "endMs": 8360,
+    "timestampMs": 8180,
+    "confidence": null
+  },
+  {
+    "text": " payments",
+    "startMs": 8360,
+    "endMs": 8780,
+    "timestampMs": 8570,
+    "confidence": null
+  },
+  {
+    "text": " so",
+    "startMs": 8960,
+    "endMs": 9160,
+    "timestampMs": 9060,
+    "confidence": null
+  },
+  {
+    "text": " you",
+    "startMs": 9160,
+    "endMs": 9320,
+    "timestampMs": 9240,
+    "confidence": null
+  },
+  {
+    "text": " can",
+    "startMs": 9320,
+    "endMs": 9800,
+    "timestampMs": 9560,
+    "confidence": null
+  },
+  {
+    "text": " explore",
+    "startMs": 9800,
+    "endMs": 9960,
+    "timestampMs": 9880,
+    "confidence": null
+  },
+  {
+    "text": " the",
+    "startMs": 9960,
+    "endMs": 10280,
+    "timestampMs": 10120,
+    "confidence": null
+  },
+  {
+    "text": " working",
+    "startMs": 10280,
+    "endMs": 10820,
+    "timestampMs": 10550,
+    "confidence": null
+  },
+  {
+    "text": " application",
+    "startMs": 10820,
+    "endMs": 11160,
+    "timestampMs": 10990,
+    "confidence": null
+  },
+  {
+    "text": " without",
+    "startMs": 11520,
+    "endMs": 12020,
+    "timestampMs": 11770,
+    "confidence": null
+  },
+  {
+    "text": " credentials.",
+    "startMs": 12020,
+    "endMs": 12456,
+    "timestampMs": 12238,
+    "confidence": null
+  }
+]

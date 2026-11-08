@@ -1,0 +1,10 @@
+[
+  "A receipt is only the start of a reimbursement. Small teams still need to check the evidence, apply their policy, approve the expense, and track the payment.",
+  "Carry brings those steps into one traceable workflow. This walkthrough uses synthetic receipts and simulated extraction and payments, so you can explore the working application without credentials.",
+  "Alex submits a travel expense. The receipt stays beside its extracted details, making the evidence easy to inspect. Alex reviews the amount, confirms the expense and payment evidence, and submits the claim. The reimbursement recipient is confirmed separately in their profile.",
+  "Carry checks the claim against explicit reimbursement rules. Missing evidence and policy exceptions remain visible, with reasons the applicant and reviewer can inspect. AI output is treated as evidence to confirm; deterministic application rules control routing.",
+  "Morgan, the finance reviewer, checks the original receipt and records an approval reason. That approval belongs to this claim version, amount, policy, and recipient. The decision history preserves what was reviewed and why it was approved.",
+  "Approval and payment are separate steps. Morgan confirms the exact amount and recipient before starting the simulated payment. Processing does not mean paid. Carry synchronizes the individual payment result before updating its status. The implemented PayPal Sandbox adapter follows this payment-intent and reconciliation flow.",
+  "Now consider a blurry, four-hundred-and-twenty-pound receipt. Carry requests better evidence. A clearer replacement resolves the evidence issue, but the expense still exceeds the example policy limit and requires finance review. Better evidence does not remove the policy exception.",
+  "Carry combines receipt evidence, explicit rules, human review, and payment tracking. Real AI calls and PayPal Sandbox transactions remain to be verified. The working local demo and MIT-licensed source are available today. Carry: from receipt to reimbursement, with every decision explained."
+]

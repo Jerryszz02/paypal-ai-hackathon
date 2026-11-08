@@ -1,0 +1,191 @@
+[
+  {
+    "text": "A",
+    "startMs": 160,
+    "endMs": 440,
+    "timestampMs": 300,
+    "confidence": null
+  },
+  {
+    "text": " receipt",
+    "startMs": 440,
+    "endMs": 700,
+    "timestampMs": 570,
+    "confidence": null
+  },
+  {
+    "text": " is",
+    "startMs": 700,
+    "endMs": 1020,
+    "timestampMs": 860,
+    "confidence": null
+  },
+  {
+    "text": " only",
+    "startMs": 1020,
+    "endMs": 1240,
+    "timestampMs": 1130,
+    "confidence": null
+  },
+  {
+    "text": " the",
+    "startMs": 1240,
+    "endMs": 1540,
+    "timestampMs": 1390,
+    "confidence": null
+  },
+  {
+    "text": " start",
+    "startMs": 1540,
+    "endMs": 1780,
+    "timestampMs": 1660,
+    "confidence": null
+  },
+  {
+    "text": " of",
+    "startMs": 1780,
+    "endMs": 1880,
+    "timestampMs": 1830,
+    "confidence": null
+  },
+  {
+    "text": " a",
+    "startMs": 1880,
+    "endMs": 2380,
+    "timestampMs": 2130,
+    "confidence": null
+  },
+  {
+    "text": " reimbursement.",
+    "startMs": 2380,
+    "endMs": 3060,
+    "timestampMs": 2720,
+    "confidence": null
+  },
+  {
+    "text": " Small",
+    "startMs": 3420,
+    "endMs": 3780,
+    "timestampMs": 3600,
+    "confidence": null
+  },
+  {
+    "text": " teams",
+    "startMs": 3780,
+    "endMs": 4120,
+    "timestampMs": 3950,
+    "confidence": null
+  },
+  {
+    "text": " still",
+    "startMs": 4120,
+    "endMs": 4300,
+    "timestampMs": 4210,
+    "confidence": null
+  },
+  {
+    "text": " need",
+    "startMs": 4300,
+    "endMs": 4460,
+    "timestampMs": 4380,
+    "confidence": null
+  },
+  {
+    "text": " to",
+    "startMs": 4460,
+    "endMs": 4640,
+    "timestampMs": 4550,
+    "confidence": null
+  },
+  {
+    "text": " check",
+    "startMs": 4640,
+    "endMs": 4800,
+    "timestampMs": 4720,
+    "confidence": null
+  },
+  {
+    "text": " the",
+    "startMs": 4800,
+    "endMs": 5200,
+    "timestampMs": 5000,
+    "confidence": null
+  },
+  {
+    "text": " evidence,",
+    "startMs": 5200,
+    "endMs": 5680,
+    "timestampMs": 5440,
+    "confidence": null
+  },
+  {
+    "text": " apply",
+    "startMs": 5920,
+    "endMs": 6080,
+    "timestampMs": 6000,
+    "confidence": null
+  },
+  {
+    "text": " their",
+    "startMs": 6080,
+    "endMs": 6540,
+    "timestampMs": 6310,
+    "confidence": null
+  },
+  {
+    "text": " policy,",
+    "startMs": 6540,
+    "endMs": 6920,
+    "timestampMs": 6730,
+    "confidence": null
+  },
+  {
+    "text": " approve",
+    "startMs": 7280,
+    "endMs": 7480,
+    "timestampMs": 7380,
+    "confidence": null
+  },
+  {
+    "text": " the",
+    "startMs": 7480,
+    "endMs": 7860,
+    "timestampMs": 7670,
+    "confidence": null
+  },
+  {
+    "text": " expense,",
+    "startMs": 7860,
+    "endMs": 8280,
+    "timestampMs": 8070,
+    "confidence": null
+  },
+  {
+    "text": " and",
+    "startMs": 8600,
+    "endMs": 8820,
+    "timestampMs": 8710,
+    "confidence": null
+  },
+  {
+    "text": " track",
+    "startMs": 8820,
+    "endMs": 9020,
+    "timestampMs": 8920,
+    "confidence": null
+  },
+  {
+    "text": " the",
+    "startMs": 9020,
+    "endMs": 9340,
+    "timestampMs": 9180,
+    "confidence": null
+  },
+  {
+    "text": " payment.",
+    "startMs": 9340,
+    "endMs": 9460,
+    "timestampMs": 9400,
+    "confidence": null
+  }
+]

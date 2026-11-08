@@ -1,0 +1,19 @@
+Title: Carry — From Receipt to Reimbursement | PayPal AI Hackathon
+
+Carry helps small teams collect receipt evidence, apply reimbursement rules, record finance decisions, and track payment results in one traceable workflow.
+
+This video shows the working local demo with synthetic receipts and explicitly simulated extraction and payments. No money moves. Real AI calls and PayPal Sandbox transactions remain to be verified; the implemented adapters are not presented as completed live integrations.
+
+00:00 The reimbursement problem
+00:12 Meet Carry
+00:25 Submit and confirm a £23.80 claim
+00:50 Explainable policy checks
+01:10 Finance review and approval
+01:32 Simulated payment and reconciliation
+01:57 Missing evidence and a policy exception
+02:20 Architecture and current status
+
+Source and local setup: https://github.com/Jerryszz02/paypal-ai-hackathon
+License: MIT; dependencies retain their respective licenses.
+
+English narration and subtitles. Narration generated from the original script using AI Voice Generator / AI Doc Maker. No background music.
