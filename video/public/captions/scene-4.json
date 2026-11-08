@@ -1,0 +1,254 @@
+[
+  {
+    "text": "Carry",
+    "startMs": 220,
+    "endMs": 580,
+    "timestampMs": 400,
+    "confidence": null
+  },
+  {
+    "text": " checks",
+    "startMs": 580,
+    "endMs": 820,
+    "timestampMs": 700,
+    "confidence": null
+  },
+  {
+    "text": " the",
+    "startMs": 820,
+    "endMs": 1020,
+    "timestampMs": 920,
+    "confidence": null
+  },
+  {
+    "text": " claim",
+    "startMs": 1020,
+    "endMs": 1340,
+    "timestampMs": 1180,
+    "confidence": null
+  },
+  {
+    "text": " against",
+    "startMs": 1340,
+    "endMs": 1840,
+    "timestampMs": 1590,
+    "confidence": null
+  },
+  {
+    "text": " explicit",
+    "startMs": 1840,
+    "endMs": 2460,
+    "timestampMs": 2150,
+    "confidence": null
+  },
+  {
+    "text": " reimbursement",
+    "startMs": 2460,
+    "endMs": 3060,
+    "timestampMs": 2760,
+    "confidence": null
+  },
+  {
+    "text": " rules.",
+    "startMs": 3060,
+    "endMs": 3700,
+    "timestampMs": 3380,
+    "confidence": null
+  },
+  {
+    "text": " Missing",
+    "startMs": 4060,
+    "endMs": 4500,
+    "timestampMs": 4280,
+    "confidence": null
+  },
+  {
+    "text": " evidence",
+    "startMs": 4500,
+    "endMs": 4780,
+    "timestampMs": 4640,
+    "confidence": null
+  },
+  {
+    "text": " and",
+    "startMs": 4780,
+    "endMs": 5200,
+    "timestampMs": 4990,
+    "confidence": null
+  },
+  {
+    "text": " policy",
+    "startMs": 5200,
+    "endMs": 5660,
+    "timestampMs": 5430,
+    "confidence": null
+  },
+  {
+    "text": " exceptions",
+    "startMs": 5660,
+    "endMs": 6160,
+    "timestampMs": 5910,
+    "confidence": null
+  },
+  {
+    "text": " remain",
+    "startMs": 6160,
+    "endMs": 6640,
+    "timestampMs": 6400,
+    "confidence": null
+  },
+  {
+    "text": " visible",
+    "startMs": 6640,
+    "endMs": 6860,
+    "timestampMs": 6750,
+    "confidence": null
+  },
+  {
+    "text": " with",
+    "startMs": 7040,
+    "endMs": 7480,
+    "timestampMs": 7260,
+    "confidence": null
+  },
+  {
+    "text": " reasons",
+    "startMs": 7480,
+    "endMs": 7780,
+    "timestampMs": 7630,
+    "confidence": null
+  },
+  {
+    "text": " the",
+    "startMs": 7780,
+    "endMs": 8140,
+    "timestampMs": 7960,
+    "confidence": null
+  },
+  {
+    "text": " applicant",
+    "startMs": 8140,
+    "endMs": 8420,
+    "timestampMs": 8280,
+    "confidence": null
+  },
+  {
+    "text": " and",
+    "startMs": 8420,
+    "endMs": 8700,
+    "timestampMs": 8560,
+    "confidence": null
+  },
+  {
+    "text": " reviewer",
+    "startMs": 8700,
+    "endMs": 9000,
+    "timestampMs": 8850,
+    "confidence": null
+  },
+  {
+    "text": " can",
+    "startMs": 9000,
+    "endMs": 9460,
+    "timestampMs": 9230,
+    "confidence": null
+  },
+  {
+    "text": " inspect.",
+    "startMs": 9460,
+    "endMs": 10260,
+    "timestampMs": 9860,
+    "confidence": null
+  },
+  {
+    "text": " AI",
+    "startMs": 10500,
+    "endMs": 10960,
+    "timestampMs": 10730,
+    "confidence": null
+  },
+  {
+    "text": " output",
+    "startMs": 10960,
+    "endMs": 11180,
+    "timestampMs": 11070,
+    "confidence": null
+  },
+  {
+    "text": " is",
+    "startMs": 11180,
+    "endMs": 11440,
+    "timestampMs": 11310,
+    "confidence": null
+  },
+  {
+    "text": " treated",
+    "startMs": 11440,
+    "endMs": 11700,
+    "timestampMs": 11570,
+    "confidence": null
+  },
+  {
+    "text": " as",
+    "startMs": 11700,
+    "endMs": 12080,
+    "timestampMs": 11890,
+    "confidence": null
+  },
+  {
+    "text": " evidence",
+    "startMs": 12080,
+    "endMs": 12340,
+    "timestampMs": 12210,
+    "confidence": null
+  },
+  {
+    "text": " to",
+    "startMs": 12340,
+    "endMs": 12780,
+    "timestampMs": 12560,
+    "confidence": null
+  },
+  {
+    "text": " confirm.",
+    "startMs": 12780,
+    "endMs": 13320,
+    "timestampMs": 13050,
+    "confidence": null
+  },
+  {
+    "text": " Deterministic",
+    "startMs": 13520,
+    "endMs": 14560,
+    "timestampMs": 14040,
+    "confidence": null
+  },
+  {
+    "text": " application",
+    "startMs": 14560,
+    "endMs": 15140,
+    "timestampMs": 14850,
+    "confidence": null
+  },
+  {
+    "text": " rules",
+    "startMs": 15140,
+    "endMs": 15600,
+    "timestampMs": 15370,
+    "confidence": null
+  },
+  {
+    "text": " control",
+    "startMs": 15600,
+    "endMs": 15960,
+    "timestampMs": 15780,
+    "confidence": null
+  },
+  {
+    "text": " routing.",
+    "startMs": 15960,
+    "endMs": 16300,
+    "timestampMs": 16130,
+    "confidence": null
+  }
+]
